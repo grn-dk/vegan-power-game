@@ -34,7 +34,7 @@ class Fruit {
   }
 
   void render(Canvas c) {
-    fruitSprite.renderRect(c, fruitRect.inflate(0.5));
+    fruitSprite.renderRect(c, fruitRect.inflate(1));
   }
 
   void update(double t) {

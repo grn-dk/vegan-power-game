@@ -40,6 +40,7 @@ class GameEngine extends Game with TapDetector {
     fruits = List<Fruit>();
     rnd = Random();
     resize(await Flame.util.initialDimensions());
+    //Second resize just to make sure that we have the right size and maybe remove the black bottom bar that randomly appears.
     resize(await Flame.util.initialDimensions());
 
     cloudSpawner = SpawnClouds(this);
@@ -48,6 +49,7 @@ class GameEngine extends Game with TapDetector {
   }
 
   void render(Canvas canvas) {
+    //Maybe I should draw borders on this one.
     background.render(canvas);
     clouds.forEach((Cloud cloud) => cloud.render(canvas));
     fruits.forEach((Fruit fruit) => fruit.render(canvas));
