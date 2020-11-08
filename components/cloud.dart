@@ -13,8 +13,6 @@ class Cloud {
   Rect cloudRect;
   double get cloudSize => 0.9 + game.rnd.nextDouble();
 
-  double get speed => game.tileSize * 3;
-
   Sprite cloudSprite;
   bool isOffScreen = false;
 
