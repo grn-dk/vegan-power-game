@@ -63,12 +63,12 @@ class GameEngine extends Game with TapDetector {
     fruitSpawner.update(t);
     fruits.forEach((Fruit fruit) => fruit.update(t));
     fruits.removeWhere((Fruit fruit) => fruit.isOffScreen);
-
+    /*
     gameTime += t;
     if(gameTime > 1) {
       //print ("clouds length: ${clouds.length} and t: $t ");
       gameTime = 0;
-    }
+    }*/
   }
 
   void resize(Size size) {

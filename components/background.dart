@@ -16,7 +16,6 @@ class Background {
       game.tileSize * 9,
       game.tileSize * 23,
     );
-    print ("Background ScreenSize: ${game.screenSize}");
   }
 
   void render(Canvas c) {
