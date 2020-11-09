@@ -1,6 +1,4 @@
-import 'package:flame/game.dart';
 import 'package:vegan_power/game_engine.dart';
-import 'package:vegan_power/components/cloud.dart';
 
 class SpawnClouds {
   final GameEngine game;

@@ -8,7 +8,7 @@ class Background {
   Rect bgRect;
 
   Background(this.game) {
-    bgSprite = Sprite('bg/blue-gradient-background.png');
+    bgSprite = Sprite('bg/blue-gradient-background.jpg');
 
     bgRect = Rect.fromLTWH(
       0,

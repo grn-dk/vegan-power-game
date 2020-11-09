@@ -20,6 +20,7 @@ class Fruit {
   List<Sprite> fruitSprite;
   double fruitSpriteIndex = 0;
   bool isOffScreen = false;
+  bool eaten = false;
 
   Fruit(this.game, double x, double y) {
     yOffset = game.tileSize * fruitSpeed * (1 + game.rnd.nextDouble());
@@ -54,6 +55,10 @@ class Fruit {
     if (fruitSpriteIndex >= animationFrames) {
       fruitSpriteIndex -= animationFrames;
     }
+  }
+
+  void fruitEaten() {
+    eaten = true;
   }
 
 }
