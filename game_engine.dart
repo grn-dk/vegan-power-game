@@ -99,12 +99,8 @@ class GameEngine extends Game with TapDetector {
   void onTapDown(TapDownDetails d) {
     //bool isHandled = false;
 
-    /*player.playerRect = player.playerRect.translate((d.globalPosition.dx
-        - player.playerRect.topLeft.dx  - (player.playerRect.width/2) ),
-        (d.globalPosition.dy - player.playerRect.topLeft.dy - (player.playerRect.height/2) ));
-    */
     player.targetLocation = Offset(d.globalPosition.dx, d.globalPosition.dy);
-    //player.targetLocation = Offset(0,0);
+
     //print("Player tap down on ${d.globalPosition.dx} - ${d.globalPosition.dy}");
   }
 
