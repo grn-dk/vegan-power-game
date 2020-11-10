@@ -11,6 +11,7 @@ import 'package:vegan_power/components/background.dart';
 import 'package:vegan_power/components/cloud.dart';
 import 'package:vegan_power/components/fruit.dart';
 import 'package:vegan_power/components/player.dart';
+import 'package:vegan_power/components/display_score.dart';
 
 import 'package:vegan_power/controllers/spawn_clouds.dart';
 import 'package:vegan_power/controllers/spawn_fruits.dart';
@@ -33,6 +34,8 @@ class GameEngine extends Game with TapDetector {
 
   Player player;
 
+  DisplayScore displayScore;
+
   GameEngine() {
     initialize();
   }
@@ -49,6 +52,7 @@ class GameEngine extends Game with TapDetector {
     cloudSpawner = SpawnClouds(this);
     fruitSpawner = SpawnFruits(this);
     background = Background(this);
+    displayScore = DisplayScore(this);
     //Spawn player in the middle of the screen
     player = Player(this, screenSize.width/2 - tileSize/2, screenSize.height/2);
     player.targetLocation = Offset(screenSize.width/2 - tileSize/2, screenSize.height/2);
@@ -60,6 +64,7 @@ class GameEngine extends Game with TapDetector {
     clouds.forEach((Cloud cloud) => cloud.render(canvas));
     fruits.forEach((Fruit fruit) => fruit.render(canvas));
     player.render(canvas);
+    displayScore.render(canvas);
   }
 
   void update(double t) {
@@ -72,6 +77,8 @@ class GameEngine extends Game with TapDetector {
     fruits.forEach((Fruit fruit) => fruit.update(t));
     fruits.removeWhere((Fruit fruit) => fruit.isOffScreen);
 
+    player.speed = 100.0 + score;
+
     player.update(t);
 
     //Fruit collision detection.
@@ -81,6 +88,9 @@ class GameEngine extends Game with TapDetector {
         score += 1;
       }
     });
+
+    displayScore.update(t);
+
     /*
     gameTime += t;
     if(gameTime > 1) {

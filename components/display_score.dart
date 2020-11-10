@@ -5,9 +5,50 @@ import 'package:vegan_power/game_engine.dart';
 class DisplayScore {
   final GameEngine game;
 
-  DisplayScore(this.game) {}
+  TextPainter painter;
+  TextStyle textStyle;
+  Offset position;
 
-  void render(Canvas c) {}
+  DisplayScore(this.game) {
+    painter = TextPainter(
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr,
+    );
 
-  void update(double t) {}
+    textStyle = TextStyle(
+      color: Color(0xffffffff),
+      fontSize: 30,
+      shadows: <Shadow>[
+        Shadow(
+          blurRadius: 7,
+          color: Color(0xff000000),
+          offset: Offset(3, 3),
+        ),
+      ],
+    );
+
+    position = Offset.zero;
+  }
+
+  void render(Canvas c) {
+    painter.paint(c, position);
+  }
+
+  void update(double t) {
+
+    //If current score is the same as painted score then do nothing.
+    if ((painter.text?.text ?? '') != game.score.toString()) {
+      painter.text = TextSpan(
+        text: "Vegan Power: " + game.score.toString(),
+        style: textStyle,
+      );
+
+      painter.layout();
+
+      position = Offset(
+        (game.screenSize.width / 2) - (painter.width / 2),
+        (game.screenSize.height * .05) - (painter.height / 2),
+      );
+    }
+  }
 }
