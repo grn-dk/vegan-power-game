@@ -6,7 +6,6 @@ import 'package:vegan_power/game_engine.dart';
 
 class Fruit {
   final GameEngine game;
-  final double fruitSpeed = 2; //How fast the fruit falls.
   final double xOffset = 0; //The fruit does not move to the sides when falling.
   final double framesPerSecond = 60; // Default mobile screen refresh rate.
   final double animationSpeed = 5; // higher value higher speed.
@@ -23,7 +22,7 @@ class Fruit {
   bool eaten = false;
 
   Fruit(this.game, double x, double y) {
-    yOffset = game.tileSize * fruitSpeed * (1 + game.rnd.nextDouble());
+    yOffset = game.tileSize * game.fruitSpeed * (1 + game.rnd.nextDouble());
     fruitRect = Rect.fromLTWH(x, y, game.tileSize * fruitSize, game.tileSize * fruitSize);
     fruitSprite = List<Sprite>();
 
@@ -49,6 +48,7 @@ class Fruit {
 
     if (fruitRect.top > game.screenSize.height) {
       isOffScreen = true;
+      game.score -= 1;
     }
 
     fruitSpriteIndex += animationSpeed * t;

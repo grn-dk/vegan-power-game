@@ -9,9 +9,9 @@ class Player {
   final double framesPerSecond = 60; // Default mobile screen refresh rate.
   final double animationSpeed = 5; // higher value higher speed.
 
-  double speed = 100;
+  double speed;
 
-  Offset targetLocation = Offset(0, 0);
+  Offset targetLocation;
 
   int animationFrames;
 
@@ -22,6 +22,7 @@ class Player {
   double playerSpriteIndex = 0;
 
   Player(this.game, double x, double y) {
+    speed = 100;
     playerRect = Rect.fromLTWH(x, y, game.tileSize * playerSize, game.tileSize * playerSize);
     playerSprite = List<Sprite>();
 
@@ -41,10 +42,11 @@ class Player {
     if (playerSpriteIndex >= animationFrames) {
       playerSpriteIndex -= animationFrames;
     }
-    if(t > 0) {
+
+    if(t > 0 && targetLocation != null) {
       double stepDistance = speed * t;
       Offset toTarget = targetLocation -
-          Offset(playerRect.left, playerRect.top);
+          Offset(playerRect.center.dx, playerRect.center.dy);
       if (stepDistance < toTarget.distance) {
         Offset stepToTarget = Offset.fromDirection(
             toTarget.direction, stepDistance);

@@ -19,8 +19,10 @@ import 'package:vegan_power/controllers/spawn_fruits.dart';
 class GameEngine extends Game with TapDetector {
   Size screenSize;
   double tileSize;
+
   Background background;
   int score;
+  double fruitSpeed;
 
   List<Cloud> clouds;
   List<Fruit> fruits;
@@ -48,14 +50,15 @@ class GameEngine extends Game with TapDetector {
     fruits = List<Fruit>();
     rnd = Random();
     score = 0;
+    fruitSpeed = 2;
 
     cloudSpawner = SpawnClouds(this);
     fruitSpawner = SpawnFruits(this);
     background = Background(this);
     displayScore = DisplayScore(this);
     //Spawn player in the middle of the screen
-    player = Player(this, screenSize.width/2 - tileSize/2, screenSize.height/2);
-    player.targetLocation = Offset(screenSize.width/2 - tileSize/2, screenSize.height/2);
+    player = Player(this, screenSize.width/2 - tileSize, screenSize.height/2);
+    //player.targetLocation = Offset(screenSize.width/2 - tileSize/2, screenSize.height/2);
   }
 
   void render(Canvas canvas) {
@@ -75,9 +78,10 @@ class GameEngine extends Game with TapDetector {
 
     fruitSpawner.update(t);
     fruits.forEach((Fruit fruit) => fruit.update(t));
+
     fruits.removeWhere((Fruit fruit) => fruit.isOffScreen);
 
-    player.speed = 100.0 + score;
+    player.speed = 100.0 + (score * 2);
 
     player.update(t);
 
@@ -86,6 +90,7 @@ class GameEngine extends Game with TapDetector {
       if (player.playerRect.contains(fruit.fruitRect.center)) {
         fruit.fruitEaten();
         score += 1;
+        fruitSpeed += 0.05;
       }
     });
 
