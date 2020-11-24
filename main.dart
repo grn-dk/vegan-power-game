@@ -13,7 +13,22 @@ void main() async {
   await flameUtil.setOrientation(DeviceOrientation.portraitUp);
 
   await Flame.images.loadAll(<String>[
+    'bg/cloud_02.png',
     'bg/cloud_01.png',
+    'units/elephant.png',
+    'units/cow.png',
+    'units/penguin.png',
+    'units/strawberry_01.png',
+    'units/pig.png',
+    'units/dog.png',
+    'units/banana_02.png',
+    'units/player_01.png',
+    'units/chicken.png',
+    'units/player_02.png',
+    'units/banana_01.png',
+    'units/player_04.png',
+    'units/banana_03.png',
+    'units/player_03.png',
     'bg/blue-gradient-background.jpg'
   ]);
 

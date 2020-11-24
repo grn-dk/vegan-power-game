@@ -7,14 +7,18 @@ import 'package:flame/flame.dart';
 
 import 'package:flutter/gestures.dart';
 
+import 'package:vegan_power/components/animal.dart';
 import 'package:vegan_power/components/background.dart';
 import 'package:vegan_power/components/cloud.dart';
 import 'package:vegan_power/components/fruit.dart';
 import 'package:vegan_power/components/player.dart';
 import 'package:vegan_power/components/display_score.dart';
+import 'package:vegan_power/components/display_credits.dart';
 
+import 'package:vegan_power/controllers/spawn_animals.dart';
 import 'package:vegan_power/controllers/spawn_clouds.dart';
 import 'package:vegan_power/controllers/spawn_fruits.dart';
+
 
 class GameEngine extends Game with TapDetector {
   Size screenSize;
@@ -22,10 +26,13 @@ class GameEngine extends Game with TapDetector {
 
   Background background;
   int score;
+  int life;
   double fruitSpeed;
+  double animalSpeed;
 
   List<Cloud> clouds;
   List<Fruit> fruits;
+  List<Animal> animals;
 
   //Cloud cloud;
   Random rnd;
@@ -33,10 +40,12 @@ class GameEngine extends Game with TapDetector {
 
   SpawnClouds cloudSpawner;
   SpawnFruits fruitSpawner;
+  SpawnAnimals animalSpawner;
 
   Player player;
 
   DisplayScore displayScore;
+  DisplayCredits displayCredits;
 
   GameEngine() {
     initialize();
@@ -48,14 +57,21 @@ class GameEngine extends Game with TapDetector {
     //gameTime = 0;
     clouds = List<Cloud>();
     fruits = List<Fruit>();
+    animals = List<Animal>();
+
     rnd = Random();
+
     score = 0;
+    life = 5;
     fruitSpeed = 2;
+    animalSpeed = 2;
 
     cloudSpawner = SpawnClouds(this);
     fruitSpawner = SpawnFruits(this);
+    animalSpawner = SpawnAnimals(this);
     background = Background(this);
     displayScore = DisplayScore(this);
+    displayCredits = DisplayCredits(this);
     //Spawn player in the middle of the screen
     player = Player(this, screenSize.width/2 - tileSize, screenSize.height/2);
     //player.targetLocation = Offset(screenSize.width/2 - tileSize/2, screenSize.height/2);
@@ -66,12 +82,17 @@ class GameEngine extends Game with TapDetector {
     background.render(canvas);
     clouds.forEach((Cloud cloud) => cloud.render(canvas));
     fruits.forEach((Fruit fruit) => fruit.render(canvas));
+    animals.forEach((Animal animal) => animal.render(canvas));
     player.render(canvas);
     displayScore.render(canvas);
+
+    //Only display credits when credits view is active
+    //displayCredits.render(canvas);
   }
 
   void update(double t) {
     fruits.removeWhere((Fruit fruit) => fruit.eaten);
+    animals.removeWhere((Animal animal) => animal.eaten);
     cloudSpawner.update(t);
     clouds.forEach((Cloud cloud) => cloud.update(t));
     clouds.removeWhere((Cloud cloud) => cloud.isOffScreen);
@@ -79,7 +100,11 @@ class GameEngine extends Game with TapDetector {
     fruitSpawner.update(t);
     fruits.forEach((Fruit fruit) => fruit.update(t));
 
+    animalSpawner.update(t);
+    animals.forEach((Animal animal) => animal.update(t));
+
     fruits.removeWhere((Fruit fruit) => fruit.isOffScreen);
+    animals.removeWhere((Animal animal) => animal.isOffScreen);
 
     player.speed = 100.0 + (score * 2);
 
@@ -94,7 +119,17 @@ class GameEngine extends Game with TapDetector {
       }
     });
 
+    //Animal collision detection.
+    animals.forEach((Animal animal) {
+      if (player.playerRect.contains(animal.animalRect.center)) {
+        animal.animalEaten();
+        life -= 1;
+        animalSpeed -= 0.05;
+      }
+    });
+
     displayScore.update(t);
+    displayCredits.update(t);
 
     /*
     gameTime += t;
@@ -137,5 +172,12 @@ class GameEngine extends Game with TapDetector {
     //All clouds start at the top of the screen
     double y = -tileSize-tileSize;
     fruits.add(Fruit(this, x, y));
+  }
+  void spawnAnimal() {
+    //Spawn cloud at a random place horizontally within the screen.
+    double x = rnd.nextDouble() * (screenSize.width - (tileSize * 2.025));
+    //All clouds start at the top of the screen
+    double y = -tileSize-tileSize;
+    animals.add(Animal(this, x, y));
   }
 }
