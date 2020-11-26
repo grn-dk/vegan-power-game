@@ -12,17 +12,22 @@ import 'package:vegan_power/view.dart';
 import 'package:vegan_power/components/animal.dart';
 import 'package:vegan_power/components/background.dart';
 import 'package:vegan_power/components/cloud.dart';
-import 'package:vegan_power/components/fruit.dart';
-import 'package:vegan_power/components/player.dart';
+import 'package:vegan_power/components/credits_button.dart';
 import 'package:vegan_power/components/display_credits.dart';
 import 'package:vegan_power/components/display_life.dart';
 import 'package:vegan_power/components/display_score.dart';
+import 'package:vegan_power/components/fruit.dart';
+import 'package:vegan_power/components/help_button.dart';
+import 'package:vegan_power/components/player.dart';
+import 'package:vegan_power/components/start_button.dart';
+
 
 import 'package:vegan_power/controllers/spawn_animals.dart';
 import 'package:vegan_power/controllers/spawn_clouds.dart';
 import 'package:vegan_power/controllers/spawn_fruits.dart';
 
 import 'package:vegan_power/views/home_view.dart';
+import 'package:vegan_power/views/lost_view.dart';
 
 class GameEngine extends Game with TapDetector {
   Size screenSize;
@@ -54,9 +59,13 @@ class GameEngine extends Game with TapDetector {
   View activeView = View.home;
 
   HomeView homeView;
-  /*LostView lostView;
-  HelpView helpView;
+  LostView lostView;
+  /*HelpView helpView;
   CreditsView creditsView;*/
+
+  StartButton startButton;
+  HelpButton helpButton;
+  CreditsButton creditsButton;
 
   GameEngine() {
     initialize();
@@ -66,9 +75,13 @@ class GameEngine extends Game with TapDetector {
     resize(await Flame.util.initialDimensions());
 
     homeView = HomeView(this);
-    /*lostView = LostView(this);
-    helpView = HelpView(this);
+    lostView = LostView(this);
+    /*helpView = HelpView(this);
     creditsView = CreditsView(this);*/
+
+    startButton = StartButton(this);
+    helpButton = HelpButton(this);
+    creditsButton = CreditsButton(this);
 
     //gameTime = 0;
     clouds = List<Cloud>();
@@ -102,56 +115,82 @@ class GameEngine extends Game with TapDetector {
 
     if (activeView == View.home) homeView.render(canvas);
 
-    fruits.forEach((Fruit fruit) => fruit.render(canvas));
-    animals.forEach((Animal animal) => animal.render(canvas));
-    player.render(canvas);
-    displayScore.render(canvas);
-    displayLife.render(canvas);
+    if (activeView == View.home || activeView == View.lost) {
+      startButton.render(canvas);
+      helpButton.render(canvas);
+      creditsButton.render(canvas);
+    }
 
+    if (activeView == View.lost) {
+      lostView.render(canvas);
+    }
+
+    //if (activeView == View.help) ;
     //Only display credits when credits view is active
-    //displayCredits.render(canvas);
+    if (activeView == View.credits) displayCredits.render(canvas);
+
+    if(activeView == View.playing) {
+      fruits.forEach((Fruit fruit) => fruit.render(canvas));
+      animals.forEach((Animal animal) => animal.render(canvas));
+      player.render(canvas);
+      displayLife.render(canvas);
+    }
+    if(activeView == View.playing || activeView == View.lost) {
+      displayScore.render(canvas);
+    }
+    if(activeView == View.lost) {
+      //Display hiscore
+    }
   }
 
   void update(double t) {
-    fruits.removeWhere((Fruit fruit) => fruit.eaten);
-    animals.removeWhere((Animal animal) => animal.eaten);
+    //Clouds
     cloudSpawner.update(t);
     clouds.forEach((Cloud cloud) => cloud.update(t));
     clouds.removeWhere((Cloud cloud) => cloud.isOffScreen);
 
-    fruitSpawner.update(t);
-    fruits.forEach((Fruit fruit) => fruit.update(t));
+    if(activeView == View.playing) {
+      //Fruits
+      fruitSpawner.update(t);
+      fruits.forEach((Fruit fruit) => fruit.update(t));
+      fruits.removeWhere((Fruit fruit) => fruit.eaten);
+      fruits.removeWhere((Fruit fruit) => fruit.isOffScreen);
 
-    animalSpawner.update(t);
-    animals.forEach((Animal animal) => animal.update(t));
+      //Animals
+      animalSpawner.update(t);
+      animals.forEach((Animal animal) => animal.update(t));
+      animals.removeWhere((Animal animal) => animal.eaten);
+      animals.removeWhere((Animal animal) => animal.isOffScreen);
 
-    fruits.removeWhere((Fruit fruit) => fruit.isOffScreen);
-    animals.removeWhere((Animal animal) => animal.isOffScreen);
+      //Player
+      player.speed = 100.0 + (score * 2);
+      player.update(t);
 
-    player.speed = 100.0 + (score * 2);
+      //Fruit collision detection.
+      fruits.forEach((Fruit fruit) {
+        if (player.playerRect.contains(fruit.fruitRect.center)) {
+          fruit.fruitEaten();
+          score += 1;
+          fruitSpeed += 0.05;
+        }
+      });
 
-    player.update(t);
+      //Animal collision detection.
+      animals.forEach((Animal animal) {
+        if (player.playerRect.contains(animal.animalRect.center)) {
+          animal.animalEaten();
+          life -= 1;
+          animalSpeed -= 0.05;
+        }
+      });
 
-    //Fruit collision detection.
-    fruits.forEach((Fruit fruit) {
-      if (player.playerRect.contains(fruit.fruitRect.center)) {
-        fruit.fruitEaten();
-        score += 1;
-        fruitSpeed += 0.05;
-      }
-    });
+      displayScore.update(t);
+    }
 
-    //Animal collision detection.
-    animals.forEach((Animal animal) {
-      if (player.playerRect.contains(animal.animalRect.center)) {
-        animal.animalEaten();
-        life -= 1;
-        animalSpeed -= 0.05;
-      }
-    });
-
-    displayScore.update(t);
-    displayCredits.update(t);
+    if (activeView == View.playing && life <= 0) {
+      activeView = View.lost;
+    }
+    //displayCredits.update(t);
 
     /*
     gameTime += t;
@@ -169,16 +208,55 @@ class GameEngine extends Game with TapDetector {
 
   @override
   void onTapDown(TapDownDetails d) {
-    //bool isHandled = false;
+    bool isHandled = false;
 
-    player.targetLocation = Offset(d.globalPosition.dx, d.globalPosition.dy);
+    //Dialog boxes
+    if (!isHandled) {
+      if (activeView == View.help || activeView == View.credits) {
+        activeView = View.home;
+        isHandled = true;
+      }
+    }
+
+    //Startbutton
+    if (!isHandled && startButton.rect.contains(d.globalPosition)) {
+      if (activeView == View.home || activeView == View.lost) {
+        startButton.onTapDown();
+        isHandled = true;
+      }
+    }
+    // help button
+    if (!isHandled && helpButton.rect.contains(d.globalPosition)) {
+      if (activeView == View.home || activeView == View.lost) {
+        helpButton.onTapDown();
+        isHandled = true;
+      }
+    }
+
+    // credits button
+    if (!isHandled && creditsButton.rect.contains(d.globalPosition)) {
+      if (activeView == View.home || activeView == View.lost) {
+        creditsButton.onTapDown();
+        isHandled = true;
+      }
+    }
+
+    //Player
+    if(!isHandled) {
+      if(activeView == View.playing) {
+        player.targetLocation = Offset(d.globalPosition.dx, d.globalPosition.dy);
+      }
+    }
+
 
     //print("Player tap down on ${d.globalPosition.dx} - ${d.globalPosition.dy}");
   }
 
   @override
   void onTapUp(TapUpDetails d) {
+    bool isHandled = false;
   }
+
 
   void spawnCloud() {
     //Spawn cloud at a random place horizontally within the screen.
