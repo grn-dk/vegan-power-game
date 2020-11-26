@@ -13,6 +13,11 @@ void main() async {
   await flameUtil.setOrientation(DeviceOrientation.portraitUp);
 
   await Flame.images.loadAll(<String>[
+    'branding/vegan_power_logo.png',
+    'ui/heart_empty_32x32.png',
+    'ui/game_over.png',
+    'ui/start_game.png',
+    'ui/heart_full_32x32.png',
     'bg/cloud_02.png',
     'bg/cloud_01.png',
     'units/elephant.png',
@@ -29,6 +34,8 @@ void main() async {
     'units/player_04.png',
     'units/banana_03.png',
     'units/player_03.png',
+    'icons/credits_icon.png',
+    'icons/help_icon.png',
     'bg/blue-gradient-background.jpg'
   ]);
 

@@ -13,6 +13,9 @@ Fruit: Code Inferno Games
 - codeinferno.com 
   
 Animals: ryan.dansie opengameart.org
+
+Heart: C.Nilsson and vermilion_wizard 
+opengameart.org 
     
 Music: Jazzy Frenchy from Bensound.com
 """;

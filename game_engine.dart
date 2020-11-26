@@ -7,18 +7,22 @@ import 'package:flame/flame.dart';
 
 import 'package:flutter/gestures.dart';
 
+import 'package:vegan_power/view.dart';
+
 import 'package:vegan_power/components/animal.dart';
 import 'package:vegan_power/components/background.dart';
 import 'package:vegan_power/components/cloud.dart';
 import 'package:vegan_power/components/fruit.dart';
 import 'package:vegan_power/components/player.dart';
-import 'package:vegan_power/components/display_score.dart';
 import 'package:vegan_power/components/display_credits.dart';
+import 'package:vegan_power/components/display_life.dart';
+import 'package:vegan_power/components/display_score.dart';
 
 import 'package:vegan_power/controllers/spawn_animals.dart';
 import 'package:vegan_power/controllers/spawn_clouds.dart';
 import 'package:vegan_power/controllers/spawn_fruits.dart';
 
+import 'package:vegan_power/views/home_view.dart';
 
 class GameEngine extends Game with TapDetector {
   Size screenSize;
@@ -34,7 +38,6 @@ class GameEngine extends Game with TapDetector {
   List<Fruit> fruits;
   List<Animal> animals;
 
-  //Cloud cloud;
   Random rnd;
   double gameTime;
 
@@ -46,6 +49,14 @@ class GameEngine extends Game with TapDetector {
 
   DisplayScore displayScore;
   DisplayCredits displayCredits;
+  DisplayLife displayLife;
+
+  View activeView = View.home;
+
+  HomeView homeView;
+  /*LostView lostView;
+  HelpView helpView;
+  CreditsView creditsView;*/
 
   GameEngine() {
     initialize();
@@ -53,6 +64,11 @@ class GameEngine extends Game with TapDetector {
 
   void initialize() async {
     resize(await Flame.util.initialDimensions());
+
+    homeView = HomeView(this);
+    /*lostView = LostView(this);
+    helpView = HelpView(this);
+    creditsView = CreditsView(this);*/
 
     //gameTime = 0;
     clouds = List<Cloud>();
@@ -72,19 +88,25 @@ class GameEngine extends Game with TapDetector {
     background = Background(this);
     displayScore = DisplayScore(this);
     displayCredits = DisplayCredits(this);
+    displayLife = DisplayLife(this);
     //Spawn player in the middle of the screen
     player = Player(this, screenSize.width/2 - tileSize, screenSize.height/2);
     //player.targetLocation = Offset(screenSize.width/2 - tileSize/2, screenSize.height/2);
   }
 
   void render(Canvas canvas) {
-    //Maybe I should draw borders on this one.
+    //Always visible section
     background.render(canvas);
     clouds.forEach((Cloud cloud) => cloud.render(canvas));
+    //Always visible section end
+
+    if (activeView == View.home) homeView.render(canvas);
+
     fruits.forEach((Fruit fruit) => fruit.render(canvas));
     animals.forEach((Animal animal) => animal.render(canvas));
     player.render(canvas);
     displayScore.render(canvas);
+    displayLife.render(canvas);
 
     //Only display credits when credits view is active
     //displayCredits.render(canvas);
