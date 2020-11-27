@@ -14,6 +14,7 @@ import 'package:vegan_power/components/background.dart';
 import 'package:vegan_power/components/cloud.dart';
 import 'package:vegan_power/components/credits_button.dart';
 import 'package:vegan_power/components/display_credits.dart';
+import 'package:vegan_power/components/display_help.dart';
 import 'package:vegan_power/components/display_life.dart';
 import 'package:vegan_power/components/display_score.dart';
 import 'package:vegan_power/components/fruit.dart';
@@ -58,6 +59,7 @@ class GameEngine extends Game with TapDetector {
 
   DisplayScore displayScore;
   DisplayCredits displayCredits;
+  DisplayHelp displayHelp;
   DisplayLife displayLife;
 
   View activeView = View.home;
@@ -106,6 +108,7 @@ class GameEngine extends Game with TapDetector {
     background = Background(this);
     displayScore = DisplayScore(this);
     displayCredits = DisplayCredits(this);
+    displayHelp = DisplayHelp(this);
     displayLife = DisplayLife(this);
     //Spawn player in the middle of the screen
     player = Player(this, screenSize.width/2 - tileSize, screenSize.height/2);
@@ -129,7 +132,7 @@ class GameEngine extends Game with TapDetector {
       lostView.render(canvas);
     }
 
-    //if (activeView == View.help) ;
+    if (activeView == View.help) displayHelp.render(canvas);
     //Only display credits when credits view is active
     if (activeView == View.credits) displayCredits.render(canvas);
 

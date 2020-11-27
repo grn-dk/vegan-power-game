@@ -2,32 +2,35 @@ import 'dart:ui';
 import 'package:flutter/painting.dart';
 import 'package:vegan_power/game_engine.dart';
 
-class DisplayCredits {
+class DisplayHelp {
   final GameEngine game;
-  final credits =
+  final help =
 """
-Credits
+Help
 
-Game by Greg Nowak, GrN.dk
-Sponsored by HelePlanter.dk
-Go Vegan!
+Don't eat your friends, the animals. 
+Only eat fruit!
 
-Fruit: Code Inferno Games 
-- codeinferno.com 
-  
-Animals: ryan.dansie opengameart.org
+Every time you eat a fruit you will 
+gain Vegan Power.
+Every time you miss a fruit you will 
+loose Vegan Power.
 
-Heart: C.Nilsson and vermilion_wizard 
-opengameart.org 
-    
-Music: Jazzy Frenchy from Bensound.com
+More Vegan Power means you move faster, 
+and fruit falls faster.
+
+When you accidentally eat an animal, 
+you will loose health. Animal protein 
+is very bad for your health.
+
+Game ends when you have no more health.
 """;
 
   TextPainter painter;
   TextStyle textStyle;
   Offset position;
 
-  DisplayCredits(this.game) {
+  DisplayHelp(this.game) {
     painter = TextPainter(
       textAlign: TextAlign.left,
       textDirection: TextDirection.ltr,
@@ -46,7 +49,7 @@ Music: Jazzy Frenchy from Bensound.com
     );
 
     painter.text = TextSpan(
-      text: credits,
+      text: help,
       style: textStyle,
     );
 
