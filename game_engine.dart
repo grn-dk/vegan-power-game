@@ -30,6 +30,10 @@ import 'package:vegan_power/views/home_view.dart';
 import 'package:vegan_power/views/lost_view.dart';
 
 class GameEngine extends Game with TapDetector {
+  final maxLife = 5;
+  final startSpeedAnimal = 2.0;
+  final startSpeedFruit = 2.0;
+
   Size screenSize;
   double tileSize;
 
@@ -91,9 +95,10 @@ class GameEngine extends Game with TapDetector {
     rnd = Random();
 
     score = 0;
-    life = 5;
-    fruitSpeed = 2;
-    animalSpeed = 2;
+    life = maxLife;
+
+    fruitSpeed = startSpeedFruit;
+    animalSpeed = startSpeedAnimal;
 
     cloudSpawner = SpawnClouds(this);
     fruitSpawner = SpawnFruits(this);
@@ -104,7 +109,6 @@ class GameEngine extends Game with TapDetector {
     displayLife = DisplayLife(this);
     //Spawn player in the middle of the screen
     player = Player(this, screenSize.width/2 - tileSize, screenSize.height/2);
-    //player.targetLocation = Offset(screenSize.width/2 - tileSize/2, screenSize.height/2);
   }
 
   void render(Canvas canvas) {
@@ -254,7 +258,7 @@ class GameEngine extends Game with TapDetector {
 
   @override
   void onTapUp(TapUpDetails d) {
-    bool isHandled = false;
+    //bool isHandled = false;
   }
 
 
@@ -279,5 +283,10 @@ class GameEngine extends Game with TapDetector {
     //All clouds start at the top of the screen
     double y = -tileSize-tileSize;
     animals.add(Animal(this, x, y));
+  }
+
+  void killAll() {
+    animals.forEach((Animal animal) => animal.eaten = true);
+    fruits.forEach((Fruit fruit) => fruit.eaten = true);
   }
 }

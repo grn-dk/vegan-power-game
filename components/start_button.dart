@@ -3,6 +3,8 @@ import 'package:flame/sprite.dart';
 import 'package:vegan_power/game_engine.dart';
 import 'package:vegan_power/view.dart';
 
+import 'package:vegan_power/components/player.dart';
+
 class StartButton {
   final GameEngine game;
   Rect rect;
@@ -25,8 +27,22 @@ class StartButton {
   void update(double t) {}
 
   void onTapDown() {
+
+    //Reset values
+    game.life = game.maxLife;
+    game.fruitSpeed = game.startSpeedFruit;
+    game.animalSpeed = game.startSpeedAnimal;
+    game.score = 0;
+    game.player.speed = game.player.startSpeedPlayer;
+
+    game.player.playerRect = Rect.fromLTWH(game.screenSize.width/2 - game.tileSize, game.screenSize.height/2,
+        game.tileSize * game.player.playerSize, game.tileSize * game.player.playerSize);
+
+    game.player.targetLocation = Offset(game.player.playerRect.center.dx, game.player.playerRect.center.dy);
+
+    game.killAll();
+
+    //Start gaming loop
     game.activeView = View.playing;
-    game.life = 5;
-    //game.spawner.start();
   }
 }

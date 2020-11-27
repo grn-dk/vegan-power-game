@@ -8,6 +8,7 @@ class Player {
   final GameEngine game;
   final double framesPerSecond = 60; // Default mobile screen refresh rate.
   final double animationSpeed = 5; // higher value higher speed.
+  final startSpeedPlayer = 100.0;
 
   double speed;
 
@@ -22,7 +23,7 @@ class Player {
   double playerSpriteIndex = 0;
 
   Player(this.game, double x, double y) {
-    speed = 100;
+    speed = startSpeedPlayer;
     playerRect = Rect.fromLTWH(x, y, game.tileSize * playerSize, game.tileSize * playerSize);
     playerSprite = List<Sprite>();
 
