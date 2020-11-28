@@ -5,6 +5,8 @@ import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/flame.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:flutter/gestures.dart';
 
 import 'package:vegan_power/view.dart';
@@ -15,12 +17,14 @@ import 'package:vegan_power/components/cloud.dart';
 import 'package:vegan_power/components/credits_button.dart';
 import 'package:vegan_power/components/display_credits.dart';
 import 'package:vegan_power/components/display_help.dart';
+import 'package:vegan_power/components/display_high_score.dart';
 import 'package:vegan_power/components/display_life.dart';
 import 'package:vegan_power/components/display_score.dart';
 import 'package:vegan_power/components/fruit.dart';
 import 'package:vegan_power/components/help_button.dart';
 import 'package:vegan_power/components/player.dart';
 import 'package:vegan_power/components/start_button.dart';
+
 
 
 import 'package:vegan_power/controllers/spawn_animals.dart';
@@ -30,10 +34,12 @@ import 'package:vegan_power/controllers/spawn_fruits.dart';
 import 'package:vegan_power/views/home_view.dart';
 import 'package:vegan_power/views/lost_view.dart';
 
+
 class GameEngine extends Game with TapDetector {
-  final maxLife = 5;
+  final maxLife = 7;
   final startSpeedAnimal = 2.0;
   final startSpeedFruit = 2.0;
+  final SharedPreferences storage;
 
   Size screenSize;
   double tileSize;
@@ -61,6 +67,7 @@ class GameEngine extends Game with TapDetector {
   DisplayCredits displayCredits;
   DisplayHelp displayHelp;
   DisplayLife displayLife;
+  DisplayHighScore displayHighScore;
 
   View activeView = View.home;
 
@@ -73,7 +80,7 @@ class GameEngine extends Game with TapDetector {
   HelpButton helpButton;
   CreditsButton creditsButton;
 
-  GameEngine() {
+  GameEngine(this.storage) {
     initialize();
   }
 
@@ -109,6 +116,7 @@ class GameEngine extends Game with TapDetector {
     displayScore = DisplayScore(this);
     displayCredits = DisplayCredits(this);
     displayHelp = DisplayHelp(this);
+    displayHighScore = DisplayHighScore(this);
     displayLife = DisplayLife(this);
     //Spawn player in the middle of the screen
     player = Player(this, screenSize.width/2 - tileSize, screenSize.height/2);
@@ -145,9 +153,7 @@ class GameEngine extends Game with TapDetector {
     if(activeView == View.playing || activeView == View.lost) {
       displayScore.render(canvas);
     }
-    if(activeView == View.lost) {
-      //Display hiscore
-    }
+    displayHighScore.render(canvas);
   }
 
   void update(double t) {
@@ -170,7 +176,7 @@ class GameEngine extends Game with TapDetector {
       animals.removeWhere((Animal animal) => animal.isOffScreen);
 
       //Player
-      player.speed = 100.0 + (score * 2);
+      player.speed = player.startSpeedPlayer + (score * 2);
       player.update(t);
 
       //Fruit collision detection.
@@ -179,6 +185,10 @@ class GameEngine extends Game with TapDetector {
           fruit.fruitEaten();
           score += 1;
           fruitSpeed += 0.05;
+          if (score > (storage.getInt('highScore') ?? 0)) {
+            storage.setInt('highScore', score);
+            displayHighScore.updateHighScore();
+          }
         }
       });
 
@@ -187,17 +197,17 @@ class GameEngine extends Game with TapDetector {
         if (player.playerRect.contains(animal.animalRect.center)) {
           animal.animalEaten();
           life -= 1;
-          animalSpeed -= 0.05;
+          //animalSpeed -= 0.05;
         }
       });
 
       displayScore.update(t);
+      displayLife.update(t);
     }
 
     if (activeView == View.playing && life <= 0) {
       activeView = View.lost;
     }
-    //displayCredits.update(t);
 
     /*
     gameTime += t;

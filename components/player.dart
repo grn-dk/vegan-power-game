@@ -8,7 +8,7 @@ class Player {
   final GameEngine game;
   final double framesPerSecond = 60; // Default mobile screen refresh rate.
   final double animationSpeed = 5; // higher value higher speed.
-  final startSpeedPlayer = 100.0;
+  final startSpeedPlayer = 150.0;
 
   double speed;
 

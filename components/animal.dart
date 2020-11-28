@@ -58,7 +58,6 @@ class Animal {
 
     if (animalRect.top > game.screenSize.height) {
       isOffScreen = true;
-      game.score -= 1;
     }
 
     animalSpriteIndex += animationSpeed * t;

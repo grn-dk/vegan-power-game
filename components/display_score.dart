@@ -45,9 +45,10 @@ class DisplayScore {
 
       painter.layout();
 
+      //Offset(x,y)
       position = Offset(
         (game.screenSize.width / 2) - (painter.width / 2),
-        (game.screenSize.height * .05) - (painter.height / 2),
+        game.tileSize,
       );
     }
   }

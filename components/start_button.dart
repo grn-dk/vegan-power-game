@@ -3,8 +3,6 @@ import 'package:flame/sprite.dart';
 import 'package:vegan_power/game_engine.dart';
 import 'package:vegan_power/view.dart';
 
-import 'package:vegan_power/components/player.dart';
-
 class StartButton {
   final GameEngine game;
   Rect rect;

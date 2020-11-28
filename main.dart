@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flame/util.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:vegan_power/game_engine.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  SharedPreferences storage = await SharedPreferences.getInstance();
 
   Util flameUtil = Util();
   await flameUtil.fullScreen();
@@ -39,6 +42,6 @@ void main() async {
     'bg/blue-gradient-background.jpg'
   ]);
 
-  GameEngine game = GameEngine();
+  GameEngine game = GameEngine(storage);
   runApp(game.widget);
 }
