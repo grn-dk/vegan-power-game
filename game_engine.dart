@@ -184,6 +184,7 @@ class GameEngine extends Game with TapDetector {
         if (player.playerRect.contains(fruit.fruitRect.center)) {
           fruit.fruitEaten();
           score += 1;
+          Flame.audio.play('sfx/nam_nam.mp3');
           fruitSpeed += 0.05;
           if (score > (storage.getInt('highScore') ?? 0)) {
             storage.setInt('highScore', score);
@@ -197,6 +198,8 @@ class GameEngine extends Game with TapDetector {
         if (player.playerRect.contains(animal.animalRect.center)) {
           animal.animalEaten();
           life -= 1;
+          //Flame.audio.play('sfx/ouch' + (game.rnd.nextInt(11) + 1).toString() + '.ogg');
+          Flame.audio.play('sfx/noo.mp3');
           //animalSpeed -= 0.05;
         }
       });

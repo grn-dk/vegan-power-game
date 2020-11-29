@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:vegan_power/game_engine.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -44,4 +45,14 @@ void main() async {
 
   GameEngine game = GameEngine(storage);
   runApp(game.widget);
+  Flame.audio.disableLog();
+  Flame.bgm.initialize();
+
+  await Flame.audio.loadAll([
+    'music/bensound-jazzyfrenchy.mp3',
+    'sfx/nam_nam.mp3',
+    'sfx/noo.mp3',
+  ]);
+  Flame.bgm.stop();
+  Flame.bgm.play('music/bensound-jazzyfrenchy.mp3', volume: .45);
 }
