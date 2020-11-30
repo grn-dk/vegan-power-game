@@ -34,6 +34,21 @@ import 'package:vegan_power/controllers/spawn_fruits.dart';
 import 'package:vegan_power/views/home_view.dart';
 import 'package:vegan_power/views/lost_view.dart';
 
+//TODO
+/*
+V1
+Add more fruit
+Add more sound effects
+Add a better player icon
+Publish on google
+Publish on
+
+
+V2
+Add google login
+Add global database score
+ */
+
 
 class GameEngine extends Game with TapDetector {
   final maxLife = 7;
@@ -227,7 +242,7 @@ class GameEngine extends Game with TapDetector {
       activeView = View.lost;
     }
 
-    /*
+    /*DEBUGGING
     gameTime += t;
     if(gameTime > 1) {
       //print ("clouds length: ${clouds.length} and t: $t ");
@@ -260,7 +275,7 @@ class GameEngine extends Game with TapDetector {
         isHandled = true;
       }
     }
-    // help button
+    //Helpbutton
     if (!isHandled && helpButton.rect.contains(d.globalPosition)) {
       if (activeView == View.home || activeView == View.lost) {
         helpButton.onTapDown();
@@ -268,7 +283,7 @@ class GameEngine extends Game with TapDetector {
       }
     }
 
-    // credits button
+    //Creditsbutton
     if (!isHandled && creditsButton.rect.contains(d.globalPosition)) {
       if (activeView == View.home || activeView == View.lost) {
         creditsButton.onTapDown();

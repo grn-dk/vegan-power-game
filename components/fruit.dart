@@ -26,7 +26,7 @@ class Fruit {
     fruitRect = Rect.fromLTWH(x, y, game.tileSize * fruitSize, game.tileSize * fruitSize);
     fruitSprite = List<Sprite>();
 
-    switch (game.rnd.nextInt(2)) {
+    switch (game.rnd.nextInt(5)) {
       case 0:
         fruitSprite.add(Sprite('units/banana_01.png'));
         fruitSprite.add(Sprite('units/banana_02.png'));
@@ -34,6 +34,15 @@ class Fruit {
         break;
       case 1:
         fruitSprite.add(Sprite('units/strawberry_01.png'));
+        break;
+      case 2:
+        fruitSprite.add(Sprite('units/orange.png'));
+        break;
+      case 3:
+        fruitSprite.add(Sprite('units/pear.png'));
+        break;
+      case 4:
+        fruitSprite.add(Sprite('units/watermelon.png'));
         break;
     }
     animationFrames = fruitSprite.length;
