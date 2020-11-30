@@ -27,9 +27,11 @@ import 'package:vegan_power/components/player.dart';
 import 'package:vegan_power/components/sound_button.dart';
 import 'package:vegan_power/components/start_button.dart';
 
+import 'package:vegan_power/controllers/sounds.dart';
 import 'package:vegan_power/controllers/spawn_animals.dart';
 import 'package:vegan_power/controllers/spawn_clouds.dart';
 import 'package:vegan_power/controllers/spawn_fruits.dart';
+
 
 import 'package:vegan_power/views/home_view.dart';
 import 'package:vegan_power/views/lost_view.dart';
@@ -37,14 +39,11 @@ import 'package:vegan_power/views/lost_view.dart';
 //TODO
 /*
 V1
-Add more fruit
-Add more sound effects
 Add a better player icon
 Publish on google
 Publish on
 
-
-V2
+V1.1
 Add google login
 Add global database score
  */
@@ -72,6 +71,7 @@ class GameEngine extends Game with TapDetector {
   Random rnd;
   double gameTime;
 
+  Sounds sounds;
   SpawnClouds cloudSpawner;
   SpawnFruits fruitSpawner;
   SpawnAnimals animalSpawner;
@@ -128,6 +128,7 @@ class GameEngine extends Game with TapDetector {
     fruitSpeed = startSpeedFruit;
     animalSpeed = startSpeedAnimal;
 
+    sounds = Sounds();
     cloudSpawner = SpawnClouds(this);
     fruitSpawner = SpawnFruits(this);
     animalSpawner = SpawnAnimals(this);
@@ -206,9 +207,8 @@ class GameEngine extends Game with TapDetector {
       fruits.forEach((Fruit fruit) {
         if (player.playerRect.contains(fruit.fruitRect.center)) {
           if(soundButton.isEnabled) {
-            Flame.audio.play('sfx/nam_nam.mp3');
+            Flame.audio.play(sounds.fruitEatenSounds[rnd.nextInt(sounds.countFruitEatenSounds)]);
           }
-
           fruit.fruitEaten();
           score += 1;
 
@@ -223,9 +223,8 @@ class GameEngine extends Game with TapDetector {
       //Animal collision detection.
       animals.forEach((Animal animal) {
         if (player.playerRect.contains(animal.animalRect.center)) {
-          //Flame.audio.play('sfx/ouch' + (game.rnd.nextInt(11) + 1).toString() + '.mp3');
           if(soundButton.isEnabled) {
-            Flame.audio.play('sfx/noo.mp3');
+            Flame.audio.play(sounds.animalsEatenSounds[rnd.nextInt(sounds.countAnimalsEatenSounds)]);
           }
 
           animal.animalEaten();
