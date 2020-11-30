@@ -22,10 +22,10 @@ import 'package:vegan_power/components/display_life.dart';
 import 'package:vegan_power/components/display_score.dart';
 import 'package:vegan_power/components/fruit.dart';
 import 'package:vegan_power/components/help_button.dart';
+import 'package:vegan_power/components/music_button.dart';
 import 'package:vegan_power/components/player.dart';
+import 'package:vegan_power/components/sound_button.dart';
 import 'package:vegan_power/components/start_button.dart';
-
-
 
 import 'package:vegan_power/controllers/spawn_animals.dart';
 import 'package:vegan_power/controllers/spawn_clouds.dart';
@@ -79,6 +79,8 @@ class GameEngine extends Game with TapDetector {
   StartButton startButton;
   HelpButton helpButton;
   CreditsButton creditsButton;
+  MusicButton musicButton;
+  SoundButton soundButton;
 
   GameEngine(this.storage) {
     initialize();
@@ -95,6 +97,8 @@ class GameEngine extends Game with TapDetector {
     startButton = StartButton(this);
     helpButton = HelpButton(this);
     creditsButton = CreditsButton(this);
+    musicButton = MusicButton(this);
+    soundButton = SoundButton(this);
 
     //gameTime = 0;
     clouds = List<Cloud>();
@@ -120,6 +124,8 @@ class GameEngine extends Game with TapDetector {
     displayLife = DisplayLife(this);
     //Spawn player in the middle of the screen
     player = Player(this, screenSize.width/2 - tileSize, screenSize.height/2);
+
+    Flame.bgm.play('music/bensound-jazzyfrenchy.mp3', volume: .3);
   }
 
   void render(Canvas canvas) {
@@ -134,6 +140,8 @@ class GameEngine extends Game with TapDetector {
       startButton.render(canvas);
       helpButton.render(canvas);
       creditsButton.render(canvas);
+      musicButton.render(canvas);
+      soundButton.render(canvas);
     }
 
     if (activeView == View.lost) {
@@ -145,9 +153,9 @@ class GameEngine extends Game with TapDetector {
     if (activeView == View.credits) displayCredits.render(canvas);
 
     if(activeView == View.playing) {
+      player.render(canvas);
       fruits.forEach((Fruit fruit) => fruit.render(canvas));
       animals.forEach((Animal animal) => animal.render(canvas));
-      player.render(canvas);
       displayLife.render(canvas);
     }
     if(activeView == View.playing || activeView == View.lost) {
@@ -182,10 +190,14 @@ class GameEngine extends Game with TapDetector {
       //Fruit collision detection.
       fruits.forEach((Fruit fruit) {
         if (player.playerRect.contains(fruit.fruitRect.center)) {
+          if(soundButton.isEnabled) {
+            Flame.audio.play('sfx/nam_nam.mp3');
+          }
+
           fruit.fruitEaten();
           score += 1;
-          Flame.audio.play('sfx/nam_nam.mp3');
-          fruitSpeed += 0.05;
+
+          fruitSpeed += 0.02;
           if (score > (storage.getInt('highScore') ?? 0)) {
             storage.setInt('highScore', score);
             displayHighScore.updateHighScore();
@@ -196,10 +208,13 @@ class GameEngine extends Game with TapDetector {
       //Animal collision detection.
       animals.forEach((Animal animal) {
         if (player.playerRect.contains(animal.animalRect.center)) {
+          //Flame.audio.play('sfx/ouch' + (game.rnd.nextInt(11) + 1).toString() + '.mp3');
+          if(soundButton.isEnabled) {
+            Flame.audio.play('sfx/noo.mp3');
+          }
+
           animal.animalEaten();
           life -= 1;
-          //Flame.audio.play('sfx/ouch' + (game.rnd.nextInt(11) + 1).toString() + '.ogg');
-          Flame.audio.play('sfx/noo.mp3');
           //animalSpeed -= 0.05;
         }
       });
@@ -265,9 +280,25 @@ class GameEngine extends Game with TapDetector {
     if(!isHandled) {
       if(activeView == View.playing) {
         player.targetLocation = Offset(d.globalPosition.dx, d.globalPosition.dy);
+        isHandled = true;
       }
     }
 
+    //Musicbutton
+    if (!isHandled && musicButton.rect.contains(d.globalPosition)) {
+      if (activeView == View.home || activeView == View.lost) {
+        musicButton.onTapDown();
+        isHandled = true;
+      }
+    }
+
+    //Soundbutton
+    if (!isHandled && soundButton.rect.contains(d.globalPosition)) {
+      if (activeView == View.home || activeView == View.lost) {
+        soundButton.onTapDown();
+        isHandled = true;
+      }
+    }
 
     //print("Player tap down on ${d.globalPosition.dx} - ${d.globalPosition.dy}");
   }

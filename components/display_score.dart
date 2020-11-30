@@ -6,6 +6,7 @@ class DisplayScore {
   final GameEngine game;
 
   TextPainter painter;
+  //TextSpan painter;
   TextStyle textStyle;
   Offset position;
 
@@ -37,7 +38,7 @@ class DisplayScore {
   void update(double t) {
 
     //If current score is the same as painted score then do nothing.
-    if ((painter.text?.text ?? '') != game.score.toString()) {
+    if ((painter.text ?? '') != game.score.toString()) {
       painter.text = TextSpan(
         text: "Vegan Power: " + game.score.toString(),
         style: textStyle,

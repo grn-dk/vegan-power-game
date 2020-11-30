@@ -38,21 +38,24 @@ void main() async {
     'units/player_04.png',
     'units/banana_03.png',
     'units/player_03.png',
+    'icons/no_music_icon.png',
     'icons/credits_icon.png',
+    'icons/no_sound_icon.png',
+    'icons/music_icon.png',
     'icons/help_icon.png',
-    'bg/blue-gradient-background.jpg'
+    'icons/sound_icon.png',
+    'bg/blue-gradient-background.jpg',
   ]);
 
   GameEngine game = GameEngine(storage);
   runApp(game.widget);
-  Flame.audio.disableLog();
   Flame.bgm.initialize();
-
-  await Flame.audio.loadAll([
+  Flame.audio.disableLog();
+  Flame.audio.loadAll([
     'music/bensound-jazzyfrenchy.mp3',
     'sfx/nam_nam.mp3',
     'sfx/noo.mp3',
   ]);
-  Flame.bgm.stop();
-  Flame.bgm.play('music/bensound-jazzyfrenchy.mp3', volume: .45);
+
+
 }
