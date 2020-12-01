@@ -14,7 +14,7 @@ class Fruit {
   int animationFrames;
 
   Rect fruitRect;
-  double get fruitSize => 0.4 + game.rnd.nextDouble();
+  double get fruitSize => 0.6 + game.rnd.nextDouble();
 
   List<Sprite> fruitSprite;
   double fruitSpriteIndex = 0;
@@ -49,7 +49,12 @@ class Fruit {
   }
 
   void render(Canvas c) {
-    fruitSprite[fruitSpriteIndex.toInt()].renderRect(c, fruitRect.inflate(2));
+    //fruitSprite[fruitSpriteIndex.toInt()].renderRect(c, fruitRect.inflate(fruitRect.width / 2));
+    fruitSprite[fruitSpriteIndex.toInt()].renderRect(c, fruitRect);
+
+    //Debugging rectangles
+    //c.drawRect(fruitRect.inflate(fruitRect.width / 2), Paint()..color = Color(0x77ffffff));
+    //c.drawRect(fruitRect, Paint()..color = Color(0x88000000));
   }
 
   void update(double t) {
@@ -61,7 +66,7 @@ class Fruit {
     }
 
     fruitSpriteIndex += animationSpeed * t;
-    if (fruitSpriteIndex >= animationFrames) {
+    while (fruitSpriteIndex >= animationFrames) {
       fruitSpriteIndex -= animationFrames;
     }
   }

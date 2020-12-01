@@ -40,7 +40,7 @@ class Player {
 
   void update(double t) {
     playerSpriteIndex += animationSpeed * t;
-    if (playerSpriteIndex >= animationFrames) {
+    while (playerSpriteIndex >= animationFrames) {
       playerSpriteIndex -= animationFrames;
     }
 

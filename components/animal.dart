@@ -14,7 +14,7 @@ class Animal {
   int animationFrames;
 
   Rect animalRect;
-  double get animalSize => 0.4 + game.rnd.nextDouble();
+  double get animalSize => 0.6 + game.rnd.nextDouble();
 
   List<Sprite> animalSprite;
   double animalSpriteIndex = 0;
@@ -50,7 +50,8 @@ class Animal {
   }
 
   void render(Canvas c) {
-    animalSprite[animalSpriteIndex.toInt()].renderRect(c, animalRect.inflate(2));
+    //animalSprite[animalSpriteIndex.toInt()].renderRect(c, animalRect.inflate(animalRect.width / 2));
+    animalSprite[animalSpriteIndex.toInt()].renderRect(c, animalRect);
   }
 
   void update(double t) {
@@ -61,7 +62,7 @@ class Animal {
     }
 
     animalSpriteIndex += animationSpeed * t;
-    if (animalSpriteIndex >= animationFrames) {
+    while (animalSpriteIndex >= animationFrames) {
       animalSpriteIndex -= animationFrames;
     }
   }
