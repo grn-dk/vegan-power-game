@@ -41,7 +41,9 @@ import 'package:vegan_power/views/lost_view.dart';
 V1
 Add a better player icon
 Publish on google
-Publish on
+
+V 1.01
+Publish on Apple store
 
 V1.1
 Add google login
