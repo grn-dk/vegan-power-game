@@ -7,7 +7,7 @@ import 'package:vegan_power/game_engine.dart';
 class Player {
   final GameEngine game;
   final double framesPerSecond = 60; // Default mobile screen refresh rate.
-  final double animationSpeed = 5; // higher value higher speed.
+  final double animationSpeed = 10; // higher value higher speed.
   final startSpeedPlayer = 150.0;
 
   double speed;
