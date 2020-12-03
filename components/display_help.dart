@@ -8,20 +8,15 @@ class DisplayHelp {
 """
 Help
 
-Don't eat your friends, the animals. 
-Only eat fruit!
+Don't eat your friends, the animals. Only eat fruit!
 
-Every time you eat a fruit you will 
-gain Vegan Power.
-Every time you miss a fruit you will 
-loose Vegan Power.
+Tap on the screen to move player.
 
-More Vegan Power means you move faster, 
-and fruit falls faster.
+Every time you eat a fruit you will gain Vegan Power. Every time you miss a fruit you will loose Vegan Power.
 
-When you accidentally eat an animal, 
-you will loose health. Animal protein 
-is very bad for your health.
+More Vegan Power means you move faster, and fruit falls faster.
+
+When you accidentally eat an animal, you will loose health. Animal protein is very bad for your health.
 
 Game ends when you have no more health.
 """;
@@ -41,7 +36,7 @@ Game ends when you have no more health.
       fontSize: 20,
       shadows: <Shadow>[
         Shadow(
-          blurRadius: 5,
+          blurRadius: 2,
           color: Color(0xff000000),
           offset: Offset(2, 2),
         ),
@@ -53,7 +48,7 @@ Game ends when you have no more health.
       style: textStyle,
     );
 
-    painter.layout();
+    painter.layout(maxWidth: game.screenSize.width - game.tileSize );
     //position Offset is left margin is what is left when the text width is
     //subtracted from the screen width divided by 2.
     // similar concept with top margin.

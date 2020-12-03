@@ -12,13 +12,13 @@ Game by Greg Nowak, GrN.dk
 Sponsored by HelePlanter.dk
 Go Vegan!
 
-Fruit: Code Inferno Games 
-- codeinferno.com 
+Player graphics by Kasper Nowak, instagram: daddeldrengeninsta
+
+Fruit: Code Inferno Games - codeinferno.com 
   
 Animals: ryan.dansie opengameart.org
 
-Heart: C.Nilsson and vermilion_wizard 
-opengameart.org 
+Heart: C.Nilsson and vermilion_wizard opengameart.org 
     
 Music: Jazzy Frenchy from Bensound.com
 """;
@@ -38,7 +38,7 @@ Music: Jazzy Frenchy from Bensound.com
       fontSize: 20,
       shadows: <Shadow>[
         Shadow(
-          blurRadius: 5,
+          blurRadius: 2,
           color: Color(0xff000000),
           offset: Offset(2, 2),
         ),
@@ -50,7 +50,7 @@ Music: Jazzy Frenchy from Bensound.com
       style: textStyle,
     );
 
-    painter.layout();
+    painter.layout(maxWidth: game.screenSize.width - game.tileSize );
     //position Offset is left margin is what is left when the text width is
     //subtracted from the screen width divided by 2.
     // similar concept with top margin.
