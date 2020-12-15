@@ -52,8 +52,8 @@ void main() async {
 
   GameEngine game = GameEngine(storage);
 
-  Flame.bgm.initialize();
   Flame.audio.disableLog();
+  Flame.bgm.initialize();
   Flame.audio.loadAll([
     'sfx/mums.mp3',
     'sfx/njumnjum.mp3',

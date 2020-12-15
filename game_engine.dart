@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/flame.dart';
-import 'package:flame/util.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 

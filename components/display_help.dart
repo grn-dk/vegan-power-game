@@ -10,7 +10,7 @@ Help
 
 Don't eat your friends, the animals. Only eat fruit!
 
-Tap on the screen to move player.
+Tap or drag on the screen to move the yellow player. The yellow player will follow your finger or your taps. 
 
 Every time you eat a fruit you will gain Vegan Power. Every time you miss a fruit you will loose Vegan Power.
 
@@ -70,7 +70,7 @@ Game ends when you have no more health.
 
     while(painter.didExceedMaxLines) {
       print("Max Lines exceded: ${painter.maxLines}, pref line height ${painter
-          .preferredLineHeight}, font size: ${fontSize} "
+          .preferredLineHeight}, font size: $fontSize"
           "painter exceed max lines: ${painter.maxLines} ");
       fontSize -= 1;
       textStyle = TextStyle(
