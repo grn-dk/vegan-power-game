@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/flame.dart';
+import 'package:flame/util.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,11 +39,7 @@ import 'package:vegan_power/views/lost_view.dart';
 
 //TODO
 /*
-V1
-Add a better player icon
-Publish on google
-
-V 1.01
+V 1.02
 Publish on Apple store
 
 V1.1
@@ -51,7 +48,7 @@ Add global database score
  */
 
 
-class GameEngine extends Game with TapDetector {
+class GameEngine extends Game with TapDetector, PanDetector {
   final maxLife = 7;
   final startSpeedAnimal = 2.0;
   final startSpeedFruit = 2.0;
@@ -142,7 +139,6 @@ class GameEngine extends Game with TapDetector {
     displayLife = DisplayLife(this);
     //Spawn player in the middle of the screen
     player = Player(this, screenSize.width/2 - tileSize, screenSize.height/2);
-
     Flame.bgm.play('music/bensound-jazzyfrenchy.mp3', volume: .3);
   }
 
@@ -258,6 +254,14 @@ class GameEngine extends Game with TapDetector {
   }
 
   @override
+  void onPanUpdate(DragUpdateDetails d) {
+    if(activeView == View.playing) {
+      player.targetLocation = Offset(d.globalPosition.dx, d.globalPosition.dy);
+      //print("Player tap down on ${d.globalPosition.dx} - ${d.globalPosition.dy} and delta = ${d.delta}");
+    }
+  }
+
+  @override
   void onTapDown(TapDownDetails d) {
     bool isHandled = false;
 
@@ -293,6 +297,7 @@ class GameEngine extends Game with TapDetector {
     }
 
     //Player
+
     if(!isHandled) {
       if(activeView == View.playing) {
         player.targetLocation = Offset(d.globalPosition.dx, d.globalPosition.dy);

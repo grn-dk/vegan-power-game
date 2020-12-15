@@ -9,6 +9,7 @@ class Fruit {
   final double xOffset = 0; //The fruit does not move to the sides when falling.
   final double framesPerSecond = 60; // Default mobile screen refresh rate.
   final double animationSpeed = 5; // higher value higher speed.
+
   double yOffset;
 
   int animationFrames;

@@ -51,7 +51,7 @@ void main() async {
   ]);
 
   GameEngine game = GameEngine(storage);
-  runApp(game.widget);
+
   Flame.bgm.initialize();
   Flame.audio.disableLog();
   Flame.audio.loadAll([
@@ -71,5 +71,5 @@ void main() async {
     'music/bensound-jazzyfrenchy.mp3',
   ]);
 
-
+  runApp(game.widget);
 }

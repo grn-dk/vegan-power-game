@@ -1,5 +1,4 @@
 class Sounds {
-  //final List<string>
   final List<String> fruitEatenSounds = [
     'sfx/mums.mp3','sfx/njumnjum.mp3','sfx/mmm.mp3','sfx/yummie.mp3',
     'sfx/dobre.mp3','sfx/nam_nam.mp3','sfx/arroy.mp3'
