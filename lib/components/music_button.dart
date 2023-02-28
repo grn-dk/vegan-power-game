@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:vegan_power/game_engine.dart';
 
 class MusicButton {
@@ -32,10 +33,10 @@ class MusicButton {
   void onTapDown() {
     if (isEnabled) {
       isEnabled = false;
-      Flame.bgm.pause();
+      FlameAudio.bgm.pause();
     } else {
       isEnabled = true;
-      Flame.bgm.resume();
+      FlameAudio.bgm.resume();
     }
   }
 }

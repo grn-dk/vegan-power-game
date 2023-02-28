@@ -14,7 +14,7 @@ class LostView {
       game.tileSize * 7,
       game.tileSize * 5,
     );
-    sprite = Sprite('ui/game_over.png');
+    sprite = Sprite('Flame.images.fromCache(ui/game_over.png');
   }
 
   void render(Canvas c) {

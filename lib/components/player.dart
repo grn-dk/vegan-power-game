@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flame/sprite.dart';
+import 'package:flame/flame.dart';
 
 import 'package:vegan_power/game_engine.dart';
 
@@ -27,10 +28,10 @@ class Player {
     playerRect = Rect.fromLTWH(x, y, game.tileSize * playerSize, game.tileSize * playerSize);
     playerSprite = List<Sprite>();
 
-    playerSprite.add(Sprite('units/player_01.png'));
-    playerSprite.add(Sprite('units/player_02.png'));
-    playerSprite.add(Sprite('units/player_03.png'));
-    playerSprite.add(Sprite('units/player_04.png'));
+    playerSprite.add(Sprite(Flame.images.fromCache('units/player_01.png')));
+    playerSprite.add(Sprite(Flame.images.fromCache('units/player_02.png')));
+    playerSprite.add(Sprite(Flame.images.fromCache('units/player_03.png')));
+    playerSprite.add(Sprite(Flame.images.fromCache('units/player_04.png')));
     animationFrames = playerSprite.length;
   }
 

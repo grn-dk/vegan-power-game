@@ -1,9 +1,12 @@
 import 'dart:ui';
 import 'dart:math';
 
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame/gestures.dart';
+import 'package:flame/components.dart';
+
 import 'package:flame/flame.dart';
+import 'package:flame_audio/flame_audio.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -46,8 +49,11 @@ Add google login
 Add global database score
  */
 
+class nisse extends FlameGame with HasCollisionDetection {
 
-class GameEngine extends Game with TapDetector, PanDetector {
+}
+
+class GameEngine extends FlameGame with TapDetector, PanDetector {
   final maxLife = 7;
   final startSpeedAnimal = 2.0;
   final startSpeedFruit = 2.0;
@@ -100,8 +106,7 @@ class GameEngine extends Game with TapDetector, PanDetector {
   }
 
   void initialize() async {
-    resize(await Flame.util.initialDimensions());
-
+    //resize(await Flame.util.initialDimensions());
     homeView = HomeView(this);
     lostView = LostView(this);
     /*helpView = HelpView(this);
@@ -138,7 +143,7 @@ class GameEngine extends Game with TapDetector, PanDetector {
     displayLife = DisplayLife(this);
     //Spawn player in the middle of the screen
     player = Player(this, screenSize.width/2 - tileSize, screenSize.height/2);
-    Flame.bgm.play('music/bensound-jazzyfrenchy.mp3', volume: .3);
+    FlameAudio.bgm.play('music/bensound-jazzyfrenchy.mp3', volume: .3);
   }
 
   void render(Canvas canvas) {
@@ -204,7 +209,7 @@ class GameEngine extends Game with TapDetector, PanDetector {
       fruits.forEach((Fruit fruit) {
         if (player.playerRect.contains(fruit.fruitRect.center)) {
           if(soundButton.isEnabled) {
-            Flame.audio.play(sounds.fruitEatenSounds[rnd.nextInt(sounds.countFruitEatenSounds)]);
+            FlameAudio.play(sounds.fruitEatenSounds[rnd.nextInt(sounds.countFruitEatenSounds)]);
           }
           fruit.fruitEaten();
           score += 1;
@@ -221,7 +226,7 @@ class GameEngine extends Game with TapDetector, PanDetector {
       animals.forEach((Animal animal) {
         if (player.playerRect.contains(animal.animalRect.center)) {
           if(soundButton.isEnabled) {
-            Flame.audio.play(sounds.animalsEatenSounds[rnd.nextInt(sounds.countAnimalsEatenSounds)]);
+            FlameAudio.play(sounds.animalsEatenSounds[rnd.nextInt(sounds.countAnimalsEatenSounds)]);
           }
 
           animal.animalEaten();
@@ -246,12 +251,12 @@ class GameEngine extends Game with TapDetector, PanDetector {
     }*/
   }
 
-  void resize(Size size) {
+  /*void resize(Size size) {
     screenSize = size;
     tileSize = screenSize.width / 9;
     super.resize(size);
-  }
-
+  }*/
+/*
   @override
   void onPanUpdate(DragUpdateDetails d) {
     if(activeView == View.playing) {
@@ -259,7 +264,9 @@ class GameEngine extends Game with TapDetector, PanDetector {
       //print("Player tap down on ${d.globalPosition.dx} - ${d.globalPosition.dy} and delta = ${d.delta}");
     }
   }
+*/
 
+  /*
   @override
   void onTapDown(TapDownDetails d) {
     bool isHandled = false;
@@ -322,12 +329,13 @@ class GameEngine extends Game with TapDetector, PanDetector {
 
     //print("Player tap down on ${d.globalPosition.dx} - ${d.globalPosition.dy}");
   }
-
+  */
+  /*
   @override
   void onTapUp(TapUpDetails d) {
     //bool isHandled = false;
   }
-
+*/
 
   void spawnCloud() {
     //Spawn cloud at a random place horizontally within the screen.

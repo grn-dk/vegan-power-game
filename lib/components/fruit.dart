@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 
 import 'package:vegan_power/game_engine.dart';
@@ -29,9 +30,9 @@ class Fruit {
 
     switch (game.rnd.nextInt(5)) {
       case 0:
-        fruitSprite.add(Sprite('units/banana_01.png'));
-        fruitSprite.add(Sprite('units/banana_02.png'));
-        fruitSprite.add(Sprite('units/banana_03.png'));
+        fruitSprite.add(Sprite(Flame.images.fromCache('units/banana_01.png')));
+        fruitSprite.add(Sprite(Flame.images.fromCache('units/banana_02.png')));
+        fruitSprite.add(Sprite(Flame.images.fromCache('units/banana_03.png')));
         break;
       case 1:
         fruitSprite.add(Sprite('units/strawberry_01.png'));
