@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flame/sprite.dart';
 
-import 'package:vegan_power/game_engine.dart';
+import '../game_engine.dart';
 
 class Animal {
   final GameEngine game;
