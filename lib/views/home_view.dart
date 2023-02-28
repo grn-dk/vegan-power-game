@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 import 'package:vegan_power/game_engine.dart';
 
@@ -14,7 +15,7 @@ class HomeView {
       game.tileSize * 7,
       game.tileSize * 4,
     );
-    titleSprite = Sprite('branding/vegan_power_logo.png');
+    titleSprite = Sprite(Flame.images.fromCache('branding/vegan_power_logo.png'));
   }
 
   void render(Canvas c) {

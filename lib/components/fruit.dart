@@ -35,16 +35,16 @@ class Fruit {
         fruitSprite.add(Sprite(Flame.images.fromCache('units/banana_03.png')));
         break;
       case 1:
-        fruitSprite.add(Sprite('units/strawberry_01.png'));
+        fruitSprite.add(Sprite(Flame.images.fromCache('units/strawberry_01.png')));
         break;
       case 2:
-        fruitSprite.add(Sprite('units/orange.png'));
+        fruitSprite.add(Sprite(Flame.images.fromCache('units/orange.png')));
         break;
       case 3:
-        fruitSprite.add(Sprite('units/pear.png'));
+        fruitSprite.add(Sprite(Flame.images.fromCache('units/pear.png')));
         break;
       case 4:
-        fruitSprite.add(Sprite('units/watermelon.png'));
+        fruitSprite.add(Sprite(Flame.images.fromCache('units/watermelon.png')));
         break;
     }
     animationFrames = fruitSprite.length;

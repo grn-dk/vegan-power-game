@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 import 'package:vegan_power/game_engine.dart';
 
@@ -14,7 +15,7 @@ class LostView {
       game.tileSize * 7,
       game.tileSize * 5,
     );
-    sprite = Sprite('Flame.images.fromCache(ui/game_over.png');
+    sprite = Sprite(Flame.images.fromCache('Flame.images.fromCache(ui/game_over.png'));
   }
 
   void render(Canvas c) {

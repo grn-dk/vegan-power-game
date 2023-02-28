@@ -18,8 +18,8 @@ class MusicButton {
       game.tileSize,
       game.tileSize,
     );
-    enabledSprite = Sprite('icons/music_icon.png');
-    disabledSprite = Sprite('icons/no_music_icon.png');
+    enabledSprite = Sprite(Flame.images.fromCache('icons/music_icon.png'));
+    disabledSprite = Sprite(Flame.images.fromCache('icons/no_music_icon.png'));
   }
 
   void render(Canvas c) {

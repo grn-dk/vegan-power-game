@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 import 'package:vegan_power/game_engine.dart';
 
@@ -16,8 +17,8 @@ class SoundButton {
       game.tileSize,
       game.tileSize,
     );
-    enabledSprite = Sprite('icons/sound_icon.png');
-    disabledSprite = Sprite('icons/no_sound_icon.png');
+    enabledSprite = Sprite(Flame.images.fromCache('icons/sound_icon.png'));
+    disabledSprite = Sprite(Flame.images.fromCache('icons/no_sound_icon.png'));
   }
 
   void render(Canvas c) {

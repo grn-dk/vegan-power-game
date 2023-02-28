@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 
 import 'package:vegan_power/game_engine.dart';
@@ -22,10 +23,10 @@ class Cloud {
 
     switch (game.rnd.nextInt(2)) {
       case 0:
-        cloudSprite = Sprite('bg/cloud_01.png');
+        cloudSprite = Sprite(Flame.images.fromCache('bg/cloud_01.png'));
         break;
       case 1:
-        cloudSprite = Sprite('bg/cloud_02.png');
+        cloudSprite = Sprite(Flame.images.fromCache('bg/cloud_02.png'));
         break;
     }
 

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 import 'package:vegan_power/game_engine.dart';
 import 'package:vegan_power/view.dart';
@@ -15,7 +16,7 @@ class HelpButton {
       game.tileSize,
       game.tileSize,
     );
-    sprite = Sprite('icons/help_icon.png');
+    sprite = Sprite(Flame.images.fromCache('icons/help_icon.png'));
   }
 
   void render(Canvas c) {
