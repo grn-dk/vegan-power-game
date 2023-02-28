@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   flame: ^1.6.0
   shared_preferences: ^2.0.18
+  flame_audio: ^1.4.0
   #flame_svg: ^0.0.1
 
 dev_dependencies:
