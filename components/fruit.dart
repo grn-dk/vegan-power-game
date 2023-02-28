@@ -50,9 +50,7 @@ class Fruit {
   }
 
   void render(Canvas c) {
-    //fruitSprite[fruitSpriteIndex.toInt()].renderRect(c, fruitRect.inflate(fruitRect.width / 2));
     fruitSprite[fruitSpriteIndex.toInt()].renderRect(c, fruitRect);
-
     //Debugging rectangles
     //c.drawRect(fruitRect.inflate(fruitRect.width / 2), Paint()..color = Color(0x77ffffff));
     //c.drawRect(fruitRect, Paint()..color = Color(0x88000000));

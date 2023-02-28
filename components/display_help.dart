@@ -69,9 +69,9 @@ Game ends when you have no more health.
     painter.layout(maxWidth: game.screenSize.width - game.tileSize );
 
     while(painter.didExceedMaxLines) {
-      print("Max Lines exceded: ${painter.maxLines}, pref line height ${painter
-          .preferredLineHeight}, font size: $fontSize"
-          "painter exceed max lines: ${painter.maxLines} ");
+      /*print("Max Lines exceded: ${painter.maxLines}, pref line height ${painter
+          .preferredLineHeight}, font size: ${fontSize} "
+          "painter exceed max lines: ${painter.maxLines} ");*/
       fontSize -= 1;
       textStyle = TextStyle(
         color: Color(0xffffffff),

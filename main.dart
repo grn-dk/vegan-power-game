@@ -9,6 +9,7 @@ import 'package:vegan_power/game_engine.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Flame.audio.disableLog();
 
   SharedPreferences storage = await SharedPreferences.getInstance();
 
@@ -52,7 +53,6 @@ void main() async {
 
   GameEngine game = GameEngine(storage);
 
-  Flame.audio.disableLog();
   Flame.bgm.initialize();
   Flame.audio.loadAll([
     'sfx/mums.mp3',
