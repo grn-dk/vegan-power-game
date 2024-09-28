@@ -1,7 +1,6 @@
 import 'dart:ui';
-
 import 'package:flame/sprite.dart';
-
+import 'package:flame/flame.dart';
 import 'package:vegan_power/game_engine.dart';
 
 class Animal {
@@ -28,22 +27,25 @@ class Animal {
 
     switch (game.rnd.nextInt(6)) {
       case 0:
-        animalSprite.add(Sprite('units/dog.png'));
+        //animalSprite.add(Sprite('units/dog.png'));
+        animalSprite.add(Sprite(Flame.images.fromCache('units/dog.png')));
         break;
       case 1:
-        animalSprite.add(Sprite('units/chicken.png'));
+        //animalSprite.add(Sprite('units/chicken.png'));
+        animalSprite.add(Sprite(Flame.images.fromCache('units/chicken.png')));
         break;
       case 2:
-        animalSprite.add(Sprite('units/pig.png'));
+        //animalSprite.add(Sprite('units/pig.png'));
+        animalSprite.add(Sprite(Flame.images.fromCache('units/pig.png')));
         break;
       case 3:
-        animalSprite.add(Sprite('units/elephant.png'));
+        animalSprite.add(Sprite(Flame.images.fromCache('units/elephant.png')));
         break;
       case 4:
-        animalSprite.add(Sprite('units/penguin.png'));
+        animalSprite.add(Sprite(Flame.images.fromCache('units/penguin.png')));
         break;
       case 5:
-        animalSprite.add(Sprite('units/cow.png'));
+        animalSprite.add(Sprite(Flame.images.fromCache('units/cow.png')));
         break;
     }
     animationFrames = animalSprite.length;

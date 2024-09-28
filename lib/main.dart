@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flame/util.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:flame_audio/flame_audio.dart';
+import 'package:flame/game.dart';
 import 'package:vegan_power/game_engine.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Flame.audio.disableLog();
 
+  //Flame.audio.disableLog();
   SharedPreferences storage = await SharedPreferences.getInstance();
 
-  Util flameUtil = Util();
-  await flameUtil.fullScreen();
-  await flameUtil.setOrientation(DeviceOrientation.portraitUp);
+  await Flame.device.fullScreen();
+  await Flame.device.setOrientation(DeviceOrientation.portraitUp);
 
   await Flame.images.loadAll(<String>[
     'branding/vegan_power_logo.png',
@@ -53,8 +52,8 @@ void main() async {
 
   GameEngine game = GameEngine(storage);
 
-  Flame.bgm.initialize();
-  Flame.audio.loadAll([
+  FlameAudio.bgm.initialize();
+  await FlameAudio.audioCache.loadAll([
     'sfx/mums.mp3',
     'sfx/njumnjum.mp3',
     'sfx/noo.mp3',
@@ -71,5 +70,5 @@ void main() async {
     'music/bensound-jazzyfrenchy.mp3',
   ]);
 
-  runApp(game.widget);
+  runApp(GameWidget(game: game,),);
 }

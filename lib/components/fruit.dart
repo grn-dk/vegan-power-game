@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 
 import 'package:vegan_power/game_engine.dart';
@@ -29,21 +30,21 @@ class Fruit {
 
     switch (game.rnd.nextInt(5)) {
       case 0:
-        fruitSprite.add(Sprite('units/banana_01.png'));
-        fruitSprite.add(Sprite('units/banana_02.png'));
-        fruitSprite.add(Sprite('units/banana_03.png'));
+        fruitSprite.add(Sprite(Flame.images.fromCache('units/banana_01.png')));
+        fruitSprite.add(Sprite(Flame.images.fromCache('units/banana_02.png')));
+        fruitSprite.add(Sprite(Flame.images.fromCache('units/banana_03.png')));
         break;
       case 1:
-        fruitSprite.add(Sprite('units/strawberry_01.png'));
+        fruitSprite.add(Sprite(Flame.images.fromCache('units/strawberry_01.png')));
         break;
       case 2:
-        fruitSprite.add(Sprite('units/orange.png'));
+        fruitSprite.add(Sprite(Flame.images.fromCache('units/orange.png')));
         break;
       case 3:
-        fruitSprite.add(Sprite('units/pear.png'));
+        fruitSprite.add(Sprite(Flame.images.fromCache('units/pear.png')));
         break;
       case 4:
-        fruitSprite.add(Sprite('units/watermelon.png'));
+        fruitSprite.add(Sprite(Flame.images.fromCache('units/watermelon.png')));
         break;
     }
     animationFrames = fruitSprite.length;

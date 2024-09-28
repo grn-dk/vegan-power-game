@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 
 import 'package:vegan_power/game_engine.dart';
@@ -29,8 +30,8 @@ class DisplayLife {
           game.tileSize / 2,
           game.tileSize / 2));
     }
-    fullHeart = Sprite('ui/heart_full_32x32.png');
-    emptyHeart = Sprite('ui/heart_empty_32x32.png');
+    fullHeart = Sprite(Flame.images.fromCache('ui/heart_full_32x32.png'));
+    emptyHeart = Sprite(Flame.images.fromCache('ui/heart_empty_32x32.png'));
   }
 
   void render(Canvas c) {

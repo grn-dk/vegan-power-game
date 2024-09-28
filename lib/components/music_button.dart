@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:vegan_power/game_engine.dart';
 
 class MusicButton {
@@ -17,8 +18,8 @@ class MusicButton {
       game.tileSize,
       game.tileSize,
     );
-    enabledSprite = Sprite('icons/music_icon.png');
-    disabledSprite = Sprite('icons/no_music_icon.png');
+    enabledSprite = Sprite(Flame.images.fromCache('icons/music_icon.png'));
+    disabledSprite = Sprite(Flame.images.fromCache('icons/no_music_icon.png'));
   }
 
   void render(Canvas c) {
@@ -32,10 +33,10 @@ class MusicButton {
   void onTapDown() {
     if (isEnabled) {
       isEnabled = false;
-      Flame.bgm.pause();
+      FlameAudio.bgm.pause();
     } else {
       isEnabled = true;
-      Flame.bgm.resume();
+      FlameAudio.bgm.resume();
     }
   }
 }

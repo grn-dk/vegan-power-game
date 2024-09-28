@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 import 'package:vegan_power/game_engine.dart';
 import 'package:vegan_power/view.dart';
@@ -15,7 +16,7 @@ class StartButton {
       game.tileSize * 6,
       game.tileSize * 3,
     );
-    sprite = Sprite('ui/start_game.png');
+    sprite = Sprite(Flame.images.fromCache('ui/start_game.png'));
   }
 
   void render(Canvas c) {
