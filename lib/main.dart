@@ -1,21 +1,25 @@
+
 import 'package:flutter/material.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flame/game.dart';
 import 'package:vegan_power/game_engine.dart';
 
+import 'package:flame/components.dart';
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  //Flame.audio.disableLog();
   SharedPreferences storage = await SharedPreferences.getInstance();
 
+  // Use the latest methods for screen orientation and full-screen mode
+  await Flame.device.setLandscape();
   await Flame.device.fullScreen();
-  await Flame.device.setOrientation(DeviceOrientation.portraitUp);
 
+  // Load all images
   await Flame.images.loadAll(<String>[
     'branding/vegan_power_logo.png',
     'ui/heart_empty_32x32.png',
@@ -50,8 +54,10 @@ void main() async {
     'bg/blue-gradient-background.jpg',
   ]);
 
+  // Initialize the game engine
   GameEngine game = GameEngine(storage);
 
+  // Initialize the audio cache
   FlameAudio.bgm.initialize();
   await FlameAudio.audioCache.loadAll([
     'sfx/mums.mp3',
@@ -70,5 +76,31 @@ void main() async {
     'music/bensound-jazzyfrenchy.mp3',
   ]);
 
-  runApp(GameWidget(game: game,),);
+  // Use GameWidget to render the game
+  runApp(GameWidget(game: game));
+/*
+  // Create your custom game instance
+  final MyGame game2 = MyGame();
+
+  // Use GameWidget to run the game
+  runApp(GameWidget(game: game2));
+  */
 }
+
+/*
+class MyGame extends FlameGame {
+  late SpriteComponent cloudSprite;
+
+  @override
+  Future<void> onLoad() async {
+    // Create the sprite using the loaded image from cache
+    cloudSprite = SpriteComponent()
+      ..sprite = Sprite(Flame.images.fromCache('bg/cloud_01.png'))  // Use the correct path to the image
+      ..size = Vector2(100, 100)
+      ..position = Vector2(100, 100); // Set position
+
+    // Add sprite to the game
+    add(cloudSprite);
+  }
+}
+*/

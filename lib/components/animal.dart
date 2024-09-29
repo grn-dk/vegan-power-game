@@ -1,76 +1,69 @@
-import 'dart:ui';
+
+import 'dart:ui';  
+import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
-import 'package:flame/flame.dart';
 import 'package:vegan_power/game_engine.dart';
 
-class Animal {
+class Animal extends SpriteComponent {
   final GameEngine game;
-  final double xOffset = 0; //The animal does not move to the sides when falling.
-  final double framesPerSecond = 60; // Default mobile screen refresh rate.
-  final double animationSpeed = 5; // higher value higher speed.
-  double yOffset;
-
-  int animationFrames;
-
-  Rect animalRect;
-  double get animalSize => 0.6 + game.rnd.nextDouble();
-
-  List<Sprite> animalSprite;
-  double animalSpriteIndex = 0;
+  final double animationSpeed = 5;
+  late double yOffset;
   bool isOffScreen = false;
-  bool eaten = false;
+  bool eaten = false;  // Adding the eaten property
+  double animalSize = 1.0;
+
+  late List<Sprite> animalSprites;
+  double animalSpriteIndex = 0;
+  late int animationFrames;
+  late Rect animalRect;
 
   Animal(this.game, double x, double y) {
     yOffset = game.tileSize * game.animalSpeed * (1 + game.rnd.nextDouble());
     animalRect = Rect.fromLTWH(x, y, game.tileSize * animalSize, game.tileSize * animalSize);
-    animalSprite = List<Sprite>();
-
+    
+    animalSprites = [];
     switch (game.rnd.nextInt(6)) {
       case 0:
-        //animalSprite.add(Sprite('units/dog.png'));
-        animalSprite.add(Sprite(Flame.images.fromCache('units/dog.png')));
+        animalSprites = [Sprite(game.images.fromCache('units/dog.png'))];
         break;
       case 1:
-        //animalSprite.add(Sprite('units/chicken.png'));
-        animalSprite.add(Sprite(Flame.images.fromCache('units/chicken.png')));
+        animalSprites = [Sprite(game.images.fromCache('units/chicken.png'))];
         break;
       case 2:
-        //animalSprite.add(Sprite('units/pig.png'));
-        animalSprite.add(Sprite(Flame.images.fromCache('units/pig.png')));
+        animalSprites = [Sprite(game.images.fromCache('units/pig.png'))];
         break;
       case 3:
-        animalSprite.add(Sprite(Flame.images.fromCache('units/elephant.png')));
+        animalSprites = [Sprite(game.images.fromCache('units/elephant.png'))];
         break;
       case 4:
-        animalSprite.add(Sprite(Flame.images.fromCache('units/penguin.png')));
+        animalSprites = [Sprite(game.images.fromCache('units/penguin.png'))];
         break;
       case 5:
-        animalSprite.add(Sprite(Flame.images.fromCache('units/cow.png')));
+        animalSprites = [Sprite(game.images.fromCache('units/cow.png'))];
         break;
     }
-    animationFrames = animalSprite.length;
+    animationFrames = animalSprites.length;
   }
 
-  void render(Canvas c) {
-    //animalSprite[animalSpriteIndex.toInt()].renderRect(c, animalRect.inflate(animalRect.width / 2));
-    animalSprite[animalSpriteIndex.toInt()].renderRect(c, animalRect);
-  }
+  @override
+  void update(double dt) {
+    super.update(dt);
+    position.y += yOffset * dt;
 
-  void update(double t) {
-    animalRect = animalRect.translate( xOffset, yOffset * t);
-
-    if (animalRect.top > game.screenSize.height) {
+    if (position.y > game.size.y) {
       isOffScreen = true;
     }
 
-    animalSpriteIndex += animationSpeed * t;
-    while (animalSpriteIndex >= animationFrames) {
-      animalSpriteIndex -= animationFrames;
+    animalSpriteIndex += animationSpeed * dt;
+    if (animalSpriteIndex >= animalSprites.length) {
+      animalSpriteIndex = 0;
     }
+
+    sprite = animalSprites[animalSpriteIndex.toInt()];
+    print("Animal updated at position: \$position");
   }
 
   void animalEaten() {
     eaten = true;
   }
-
 }
