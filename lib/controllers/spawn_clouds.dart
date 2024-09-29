@@ -7,8 +7,8 @@ class SpawnClouds {
   final int minSpawnInterval = 1500;
   final int intervalChange = 2;
 
-  int currentInterval;
-  int nextSpawn;
+  late int currentInterval;
+  late int nextSpawn;
 
   SpawnClouds(this.game) {
     start();
@@ -23,7 +23,7 @@ class SpawnClouds {
   void update(double t) {
     int nowTimestamp = DateTime.now().millisecondsSinceEpoch;
 
-    if (nowTimestamp >= nextSpawn ) {
+    if (nowTimestamp >= nextSpawn) {
       game.spawnCloud();
       if (currentInterval > minSpawnInterval) {
         currentInterval -= intervalChange;
