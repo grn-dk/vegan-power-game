@@ -23,7 +23,7 @@ class GameEngine extends FlameGame
   double fruitSpeed = 1.5;
   double animalSpeed = 2.0;
 
-  late List<Cloud> clouds;
+  late List<Cloud> clouds; // Declare clouds as late
   /*List<Fruit> fruits;
   List<Animal> animals;*/
 
@@ -32,7 +32,7 @@ class GameEngine extends FlameGame
 
   GameEngine(this.storage) {
     rnd = Random();
-    clouds = [];
+    clouds = []; // Initialize clouds as an empty list in the constructor
   }
 
   @override
@@ -59,7 +59,7 @@ class GameEngine extends FlameGame
     // First call the super method to render all the default components
     super.render(canvas);
 
-    //Always visible section
+    // Always visible section
     background.render(canvas);
     clouds.forEach((Cloud cloud) => cloud.render(canvas));
 
@@ -76,7 +76,9 @@ class GameEngine extends FlameGame
   void spawnCloud() {
     double x = rnd.nextDouble() * (size.x - 100);
     double y = -100;
-    add(Cloud(this, x, y));
+    Cloud cloud = Cloud(this, x, y); // Create a Cloud instance
+    clouds.add(cloud); // Add it to the clouds list
+    add(cloud); // Add it to the Flame engine
   }
 
   void spawnFruit() {
