@@ -18,14 +18,14 @@ class DisplayLife {
 
   List<Rect> lifeRect;
 
-
   DisplayLife(this.game) {
     lifeRect = List<Rect>();
 
-    for( i = 0; i < game.maxLife; i++ ) {
+    for (i = 0; i < game.maxLife; i++) {
       // Every heart is 1/2 tile wide.
-      lifeRect.add(Rect.fromLTWH((game.tileSize / 2 * i) +
-          ((game.screenSize.width - (game.tileSize * game.maxLife)) / 2),
+      lifeRect.add(Rect.fromLTWH(
+          (game.tileSize / 2 * i) +
+              ((game.size.x - (game.tileSize * game.maxLife)) / 2),
           game.tileSize / 3,
           game.tileSize / 2,
           game.tileSize / 2));
@@ -35,15 +35,13 @@ class DisplayLife {
   }
 
   void render(Canvas c) {
-    for( i = 0; i < game.life; i++) {
+    for (i = 0; i < game.life; i++) {
       fullHeart.renderRect(c, lifeRect[i]);
     }
-    for( i = game.maxLife - 1; i > game.life - 1; i--) {
+    for (i = game.maxLife - 1; i > game.life - 1; i--) {
       emptyHeart.renderRect(c, lifeRect[i]);
     }
-
   }
 
-  void update(double t) {
-  }
+  void update(double t) {}
 }

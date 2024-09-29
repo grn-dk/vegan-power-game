@@ -10,8 +10,8 @@ class DisplayHighScore {
 
   DisplayHighScore(this.game) {
     painter = TextPainter(
-        textAlign: TextAlign.center,
-        textDirection: TextDirection.ltr,
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr,
     );
     textStyle = TextStyle(
       color: Color(0xffffffff),
@@ -45,7 +45,7 @@ class DisplayHighScore {
     painter.layout();
 
     position = Offset(
-      game.screenSize.width - (game.tileSize * .25) - painter.width,
+      game.size.x - (game.tileSize * .25) - painter.width,
       game.tileSize * .25,
     );
   }

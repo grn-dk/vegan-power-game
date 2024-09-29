@@ -12,7 +12,7 @@ class StartButton {
   StartButton(this.game) {
     rect = Rect.fromLTWH(
       game.tileSize * 1.5,
-      (game.screenSize.height * .75) - (game.tileSize * 1.5),
+      (game.size.y * .75) - (game.tileSize * 1.5),
       game.tileSize * 6,
       game.tileSize * 3,
     );
@@ -26,7 +26,6 @@ class StartButton {
   void update(double t) {}
 
   void onTapDown() {
-
     //Reset values
     game.life = game.maxLife;
     game.fruitSpeed = game.startSpeedFruit;
@@ -34,10 +33,14 @@ class StartButton {
     game.score = 0;
     game.player.speed = game.player.startSpeedPlayer;
 
-    game.player.playerRect = Rect.fromLTWH(game.screenSize.width/2 - game.tileSize, game.screenSize.height/2,
-        game.tileSize * game.player.playerSize, game.tileSize * game.player.playerSize);
+    game.player.playerRect = Rect.fromLTWH(
+        game.size.x / 2 - game.tileSize,
+        game.size.y / 2,
+        game.tileSize * game.player.playerSize,
+        game.tileSize * game.player.playerSize);
 
-    game.player.targetLocation = Offset(game.player.playerRect.center.dx, game.player.playerRect.center.dy);
+    game.player.targetLocation = Offset(
+        game.player.playerRect.center.dx, game.player.playerRect.center.dy);
 
     game.killAll();
 

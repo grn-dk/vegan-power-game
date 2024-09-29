@@ -6,13 +6,13 @@ import 'package:vegan_power/view.dart';
 
 class CreditsButton {
   final GameEngine game;
-  Rect rect;
-  Sprite sprite;
+  late Rect rect;
+  late Sprite sprite;
 
   CreditsButton(this.game) {
     rect = Rect.fromLTWH(
-      game.screenSize.width - (game.tileSize * 1.25),
-      game.screenSize.height - (game.tileSize * 1.25),
+      game.size.x - (game.tileSize * 1.25),
+      game.size.y - (game.tileSize * 1.25),
       game.tileSize,
       game.tileSize,
     );

@@ -9,11 +9,12 @@ class Background {
   Rect bgRect;
 
   Background(this.game) {
-    bgSprite = Sprite(Flame.images.fromCache('bg/blue-gradient-background.jpg'));
+    bgSprite =
+        Sprite(Flame.images.fromCache('bg/blue-gradient-background.jpg'));
 
     bgRect = Rect.fromLTWH(
       0,
-      game.screenSize.height - (game.tileSize * 23),
+      game.size.y - (game.tileSize * 23),
       game.tileSize * 9,
       game.tileSize * 23,
     );

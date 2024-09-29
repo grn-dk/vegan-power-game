@@ -36,7 +36,6 @@ class DisplayScore {
   }
 
   void update(double t) {
-
     //If current score is the same as painted score then do nothing.
     if ((painter.text ?? '') != game.score.toString()) {
       painter.text = TextSpan(
@@ -48,7 +47,7 @@ class DisplayScore {
 
       //Offset(x,y)
       position = Offset(
-        (game.screenSize.width / 2) - (painter.width / 2),
+        (game.size.x / 2) - (painter.width / 2),
         game.tileSize,
       );
     }

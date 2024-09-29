@@ -14,6 +14,6 @@ class Cloud extends SpriteComponent {
   Future<void> onLoad() async {
     sprite = await Sprite.load('bg/cloud_01.png');
     size = Vector2(100, 100);  // Adjust size as needed
-    print("Cloud component added at position: \$position");
+    print("Cloud component added at position: $position");
   }
 }

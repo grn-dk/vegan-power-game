@@ -1,5 +1,3 @@
-
-import 'dart:ui';
 import 'dart:math';
 
 import 'package:flame/events.dart';
@@ -9,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vegan_power/components/cloud.dart';
 import 'package:vegan_power/components/fruit.dart';
 import 'package:vegan_power/components/animal.dart';
+import 'package:vegan_power/components/background.dart';
 
 class GameEngine extends FlameGame with TapDetector, PanDetector, HasCollisionDetection {
   final int maxLife = 7;
@@ -16,7 +15,7 @@ class GameEngine extends FlameGame with TapDetector, PanDetector, HasCollisionDe
   final double startSpeedFruit = 2.0;
   final SharedPreferences storage;
   late Random rnd;
-  late double tileSize;  
+  late double tileSize;
   double fruitSpeed = 1.5;  
   double animalSpeed = 2.0;  
   int score = 0;  
@@ -37,9 +36,9 @@ class GameEngine extends FlameGame with TapDetector, PanDetector, HasCollisionDe
     add(background);
 
     // Add initial game components
-   /* spawnCloud();
+    spawnCloud();
     spawnAnimal();
-    spawnFruit();*/
+    /*spawnFruit();*/
   }
 
   void spawnCloud() {

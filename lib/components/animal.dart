@@ -1,5 +1,4 @@
-
-import 'dart:ui';  
+import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
 import 'package:vegan_power/game_engine.dart';
@@ -9,7 +8,7 @@ class Animal extends SpriteComponent {
   final double animationSpeed = 5;
   late double yOffset;
   bool isOffScreen = false;
-  bool eaten = false;  // Adding the eaten property
+  bool eaten = false;
   double animalSize = 1.0;
 
   late List<Sprite> animalSprites;
@@ -17,11 +16,14 @@ class Animal extends SpriteComponent {
   late int animationFrames;
   late Rect animalRect;
 
-  Animal(this.game, double x, double y) {
+  Animal(this.game, double x, double y)
+      : super(position: Vector2(x, y), size: Vector2(100, 100)); // Set default size
+
+  @override
+  Future<void> onLoad() async {
     yOffset = game.tileSize * game.animalSpeed * (1 + game.rnd.nextDouble());
-    animalRect = Rect.fromLTWH(x, y, game.tileSize * animalSize, game.tileSize * animalSize);
-    
-    animalSprites = [];
+
+    // Load the sprites using the image cache
     switch (game.rnd.nextInt(6)) {
       case 0:
         animalSprites = [Sprite(game.images.fromCache('units/dog.png'))];
@@ -42,7 +44,11 @@ class Animal extends SpriteComponent {
         animalSprites = [Sprite(game.images.fromCache('units/cow.png'))];
         break;
     }
+
+    // Ensure that the sprite is set properly
+    sprite = animalSprites[0];
     animationFrames = animalSprites.length;
+    size = Vector2(100, 100);  // Adjust size if necessary
   }
 
   @override
@@ -60,7 +66,7 @@ class Animal extends SpriteComponent {
     }
 
     sprite = animalSprites[animalSpriteIndex.toInt()];
-    print("Animal updated at position: \$position");
+    print("Animal updated at position: $position, game size: ${game.size}");
   }
 
   void animalEaten() {

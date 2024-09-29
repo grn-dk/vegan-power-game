@@ -12,7 +12,7 @@ class HelpButton {
   HelpButton(this.game) {
     rect = Rect.fromLTWH(
       game.tileSize * .25,
-      game.screenSize.height - (game.tileSize * 1.25),
+      game.size.y - (game.tileSize * 1.25),
       game.tileSize,
       game.tileSize,
     );

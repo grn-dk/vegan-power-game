@@ -11,11 +11,12 @@ class LostView {
   LostView(this.game) {
     rect = Rect.fromLTWH(
       game.tileSize,
-      (game.screenSize.height / 2) - (game.tileSize * 5),
+      (game.size.y / 2) - (game.tileSize * 5),
       game.tileSize * 7,
       game.tileSize * 5,
     );
-    sprite = Sprite(Flame.images.fromCache('Flame.images.fromCache(ui/game_over.png'));
+    sprite = Sprite(
+        Flame.images.fromCache('Flame.images.fromCache(ui/game_over.png'));
   }
 
   void render(Canvas c) {

@@ -4,8 +4,7 @@ import 'package:vegan_power/game_engine.dart';
 
 class DisplayCredits {
   final GameEngine game;
-  final credits =
-"""
+  final credits = """
 Credits
 
 Game by Greg Nowak, GrN.dk
@@ -53,7 +52,8 @@ Music: Jazzy Frenchy from Bensound.com
       fontSize: fontSize,
       fontWeight: FontWeight.bold,
       shadows: <Shadow>[
-        Shadow( // bottomLeft
+        Shadow(
+          // bottomLeft
           blurRadius: shadowBlurRadius,
           offset: Offset(shadowOffset, shadowOffset),
           color: Color(shadowColor),
@@ -64,14 +64,14 @@ Music: Jazzy Frenchy from Bensound.com
     painter.text = TextSpan(
       text: credits,
       style: textStyle,
-
     );
 
-    painter.maxLines = ( (game.screenSize.height - game.tileSize) ~/ painter.preferredLineHeight).toInt();
-    painter.layout(maxWidth: game.screenSize.width - game.tileSize );
+    painter.maxLines =
+        ((game.size.y - game.tileSize) ~/ painter.preferredLineHeight).toInt();
+    painter.layout(maxWidth: game.size.x - game.tileSize);
 
-    while(painter.didExceedMaxLines) {
-     /* print("Max Lines exceded: ${painter.maxLines}, pref line height ${painter
+    while (painter.didExceedMaxLines) {
+      /* print("Max Lines exceded: ${painter.maxLines}, pref line height ${painter
           .preferredLineHeight}, font size: ${fontSize} "
           "painter exceed max lines: ${painter.maxLines} ");*/
       fontSize -= 1;
@@ -80,7 +80,8 @@ Music: Jazzy Frenchy from Bensound.com
         fontSize: fontSize,
         fontWeight: FontWeight.bold,
         shadows: <Shadow>[
-          Shadow( // bottomLeft
+          Shadow(
+            // bottomLeft
             blurRadius: shadowBlurRadius,
             offset: Offset(shadowOffset, shadowOffset),
             color: Color(shadowColor),
@@ -88,10 +89,12 @@ Music: Jazzy Frenchy from Bensound.com
         ],
       );
 
-      painter.text = TextSpan( text: credits, style: textStyle);
+      painter.text = TextSpan(text: credits, style: textStyle);
 
-      painter.maxLines = ( (game.screenSize.height - game.tileSize) ~/ painter.preferredLineHeight).toInt();
-      painter.layout(maxWidth: game.screenSize.width - game.tileSize );
+      painter.maxLines =
+          ((game.size.y - game.tileSize) ~/ painter.preferredLineHeight)
+              .toInt();
+      painter.layout(maxWidth: game.size.x - game.tileSize);
     }
 
     textStyle2 = TextStyle(
@@ -108,14 +111,12 @@ Music: Jazzy Frenchy from Bensound.com
       style: textStyle2,
     );
 
-    painter2.layout(maxWidth: game.screenSize.width - game.tileSize );
+    painter2.layout(maxWidth: game.size.x - game.tileSize);
     //position Offset is left margin is what is left when the text width is
     //subtracted from the screen width divided by 2.
     // similar concept with top margin.
     position = Offset(
-        ( game.screenSize.width - painter.width ) / 2,
-        ( game.screenSize.height - painter.height ) / 2
-    );
+        (game.size.x - painter.width) / 2, (game.size.y - painter.height) / 2);
   }
 
   void render(Canvas c) {
@@ -123,6 +124,5 @@ Music: Jazzy Frenchy from Bensound.com
     painter.paint(c, position);
   }
 
-  void update(double t) {
-  }
+  void update(double t) {}
 }

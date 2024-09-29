@@ -36,7 +36,7 @@ class Fruit extends SpriteComponent {
     }
 
     sprite = fruitSprites[fruitSpriteIndex.toInt()];
-    print("Fruit updated at position: \$position");
+    print("Fruit updated at position: $position");
   }
 
   void fruitEaten() {

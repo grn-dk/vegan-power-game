@@ -13,7 +13,7 @@ class SoundButton {
   SoundButton(this.game) {
     rect = Rect.fromLTWH(
       game.tileSize * 5,
-      game.screenSize.height - (game.tileSize * 1.25),
+      game.size.y - (game.tileSize * 1.25),
       game.tileSize,
       game.tileSize,
     );

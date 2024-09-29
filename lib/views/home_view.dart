@@ -11,11 +11,12 @@ class HomeView {
   HomeView(this.game) {
     titleRect = Rect.fromLTWH(
       game.tileSize,
-      (game.screenSize.height / 2) - (game.tileSize * 4),
+      (game.size.y / 2) - (game.tileSize * 4),
       game.tileSize * 7,
       game.tileSize * 4,
     );
-    titleSprite = Sprite(Flame.images.fromCache('branding/vegan_power_logo.png'));
+    titleSprite =
+        Sprite(Flame.images.fromCache('branding/vegan_power_logo.png'));
   }
 
   void render(Canvas c) {
