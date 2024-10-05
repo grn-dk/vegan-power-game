@@ -11,22 +11,23 @@ class Player {
   final double animationSpeed = 10; // higher value higher speed.
   final startSpeedPlayer = 150.0;
 
-  double speed;
+  late double speed;
 
-  Offset targetLocation;
+  late Offset targetLocation;
 
-  int animationFrames;
+  late int animationFrames;
 
-  Rect playerRect;
+  late Rect playerRect;
   double playerSize = 2;
 
-  List<Sprite> playerSprite;
+  late List<Sprite> playerSprite;
   double playerSpriteIndex = 0;
 
   Player(this.game, double x, double y) {
     speed = startSpeedPlayer;
-    playerRect = Rect.fromLTWH(x, y, game.tileSize * playerSize, game.tileSize * playerSize);
-    playerSprite = List<Sprite>();
+    playerRect = Rect.fromLTWH(
+        x, y, game.tileSize * playerSize, game.tileSize * playerSize);
+    playerSprite = <Sprite>[];
 
     playerSprite.add(Sprite(Flame.images.fromCache('units/player_01.png')));
     playerSprite.add(Sprite(Flame.images.fromCache('units/player_02.png')));
@@ -36,7 +37,8 @@ class Player {
   }
 
   void render(Canvas c) {
-    playerSprite[playerSpriteIndex.toInt()].renderRect(c, playerRect.inflate(1));
+    playerSprite[playerSpriteIndex.toInt()]
+        .renderRect(c, playerRect.inflate(1));
   }
 
   void update(double t) {
@@ -45,18 +47,17 @@ class Player {
       playerSpriteIndex -= animationFrames;
     }
 
-    if(t > 0 && targetLocation != null) {
+    if (t > 0) {
       double stepDistance = speed * t;
-      Offset toTarget = targetLocation -
-          Offset(playerRect.center.dx, playerRect.center.dy);
+      Offset toTarget =
+          targetLocation - Offset(playerRect.center.dx, playerRect.center.dy);
       if (stepDistance < toTarget.distance) {
-        Offset stepToTarget = Offset.fromDirection(
-            toTarget.direction, stepDistance);
+        Offset stepToTarget =
+            Offset.fromDirection(toTarget.direction, stepDistance);
         playerRect = playerRect.shift(stepToTarget);
       } else {
         playerRect = playerRect.shift(toTarget);
       }
     }
   }
-
 }

@@ -9,8 +9,8 @@ class Sounds {
     'sfx/nie.mp3'
   ];
 
-  int countFruitEatenSounds;
-  int countAnimalsEatenSounds;
+  late int countFruitEatenSounds;
+  late int countAnimalsEatenSounds;
 
   Sounds() {
     countFruitEatenSounds = fruitEatenSounds.length;

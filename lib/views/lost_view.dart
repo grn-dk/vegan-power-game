@@ -5,8 +5,8 @@ import 'package:vegan_power/game_engine.dart';
 
 class LostView {
   final GameEngine game;
-  Rect rect;
-  Sprite sprite;
+  late Rect rect;
+  late Sprite sprite;
 
   LostView(this.game) {
     rect = Rect.fromLTWH(

@@ -2,7 +2,9 @@ import 'dart:ui';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 import 'package:vegan_power/game_engine.dart';
-import 'package:vegan_power/view.dart';
+import 'package:vegan_power/view_list.dart';
+
+
 
 class CreditsButton {
   final GameEngine game;
@@ -24,6 +26,6 @@ class CreditsButton {
   }
 
   void onTapDown() {
-    game.activeView = View.credits;
+    game.activeView = ViewList.credits;
   }
 }

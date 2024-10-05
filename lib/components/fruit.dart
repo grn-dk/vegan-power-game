@@ -1,4 +1,3 @@
-
 import 'package:flame/components.dart';
 import 'package:vegan_power/game_engine.dart';
 
@@ -7,7 +6,7 @@ class Fruit extends SpriteComponent {
   final double animationSpeed = 5;
   late double yOffset;
   bool isOffScreen = false;
-  bool eaten = false;  // Adding the eaten property
+  bool eaten = false; // Adding the eaten property
   double fruitSize = 1.0;
 
   late List<Sprite> fruitSprites;
@@ -36,7 +35,7 @@ class Fruit extends SpriteComponent {
     }
 
     sprite = fruitSprites[fruitSpriteIndex.toInt()];
-    print("Fruit updated at position: $position");
+    //print("Fruit updated at position: $position");
   }
 
   void fruitEaten() {

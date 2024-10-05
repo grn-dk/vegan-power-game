@@ -8,18 +8,18 @@ import 'package:vegan_power/game_engine.dart';
 class DisplayLife {
   final GameEngine game;
 
-  int i;
+  late int i;
 
-  Sprite fullHeart;
-  Sprite emptyHeart;
+  late Sprite fullHeart;
+  late Sprite emptyHeart;
 
-  Rect heartRect;
-  Rect heartRect1;
+  late Rect heartRect;
+  late Rect heartRect1;
 
-  List<Rect> lifeRect;
+  late List<Rect> lifeRect;
 
   DisplayLife(this.game) {
-    lifeRect = List<Rect>();
+    lifeRect = <Rect>[];
 
     for (i = 0; i < game.maxLife; i++) {
       // Every heart is 1/2 tile wide.

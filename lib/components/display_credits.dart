@@ -28,13 +28,13 @@ Music: Jazzy Frenchy from Bensound.com
 
   double fontSize = 20.0;
 
-  TextPainter painter;
-  TextPainter painter2;
+  late TextPainter painter;
+  late TextPainter painter2;
 
-  TextStyle textStyle;
-  TextStyle textStyle2;
+  late TextStyle textStyle;
+  late TextStyle textStyle2;
 
-  Offset position;
+  late Offset position;
 
   DisplayCredits(this.game) {
     painter = TextPainter(

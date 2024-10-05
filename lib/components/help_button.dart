@@ -2,12 +2,12 @@ import 'dart:ui';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 import 'package:vegan_power/game_engine.dart';
-import 'package:vegan_power/view.dart';
+import 'package:vegan_power/view_list.dart';
 
 class HelpButton {
   final GameEngine game;
-  Rect rect;
-  Sprite sprite;
+  late Rect rect;
+  late Sprite sprite;
 
   HelpButton(this.game) {
     rect = Rect.fromLTWH(
@@ -24,6 +24,6 @@ class HelpButton {
   }
 
   void onTapDown() {
-    game.activeView = View.help;
+    game.activeView = ViewList.help;
   }
 }

@@ -5,10 +5,10 @@ import 'package:vegan_power/game_engine.dart';
 class DisplayScore {
   final GameEngine game;
 
-  TextPainter painter;
+  late TextPainter painter;
   //TextSpan painter;
-  TextStyle textStyle;
-  Offset position;
+  late TextStyle textStyle;
+  late Offset position;
 
   DisplayScore(this.game) {
     painter = TextPainter(
@@ -39,7 +39,7 @@ class DisplayScore {
     //If current score is the same as painted score then do nothing.
     if ((painter.text ?? '') != game.score.toString()) {
       painter.text = TextSpan(
-        text: "Vegan Power: " + game.score.toString(),
+        text: "Vegan Power: ${game.score.toString()}",
         style: textStyle,
       );
 

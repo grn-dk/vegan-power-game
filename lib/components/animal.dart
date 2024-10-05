@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:flame/components.dart';
-import 'package:flame/sprite.dart';
 import 'package:vegan_power/game_engine.dart';
 
 class Animal extends SpriteComponent {
@@ -17,7 +16,9 @@ class Animal extends SpriteComponent {
   late Rect animalRect;
 
   Animal(this.game, double x, double y)
-      : super(position: Vector2(x, y), size: Vector2(100, 100)); // Set default size
+      : super(
+            position: Vector2(x, y),
+            size: Vector2(100, 100)); // Set default size
 
   @override
   Future<void> onLoad() async {
@@ -48,7 +49,7 @@ class Animal extends SpriteComponent {
     // Ensure that the sprite is set properly
     sprite = animalSprites[0];
     animationFrames = animalSprites.length;
-    size = Vector2(100, 100);  // Adjust size if necessary
+    size = Vector2(100, 100); // Adjust size if necessary
   }
 
   @override
@@ -66,7 +67,7 @@ class Animal extends SpriteComponent {
     }
 
     sprite = animalSprites[animalSpriteIndex.toInt()];
-    print("Animal updated at position: $position, game size: ${game.size}");
+    //print("Animal updated at position: $position, game size: ${game.size}");
   }
 
   void animalEaten() {

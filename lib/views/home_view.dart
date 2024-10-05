@@ -5,8 +5,8 @@ import 'package:vegan_power/game_engine.dart';
 
 class HomeView {
   final GameEngine game;
-  Rect titleRect;
-  Sprite titleSprite;
+  late Rect titleRect;
+  late Sprite titleSprite;
 
   HomeView(this.game) {
     titleRect = Rect.fromLTWH(

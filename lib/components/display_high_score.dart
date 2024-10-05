@@ -4,9 +4,9 @@ import 'package:vegan_power/game_engine.dart';
 
 class DisplayHighScore {
   final GameEngine game;
-  TextPainter painter;
-  TextStyle textStyle;
-  Offset position;
+  late TextPainter painter;
+  late TextStyle textStyle;
+  late Offset position;
 
   DisplayHighScore(this.game) {
     painter = TextPainter(

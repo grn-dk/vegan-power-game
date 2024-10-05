@@ -2,37 +2,96 @@ import 'dart:math';
 
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vegan_power/components/cloud.dart';
 import 'package:vegan_power/components/fruit.dart';
 import 'package:vegan_power/components/animal.dart';
+import 'package:vegan_power/components/player.dart';
 import 'package:vegan_power/components/background.dart';
+import 'package:vegan_power/components/start_button.dart';
+import 'package:vegan_power/components/sound_button.dart';
+import 'package:vegan_power/components/music_button.dart';
+import 'package:vegan_power/components/help_button.dart';
+import 'package:vegan_power/components/credits_button.dart';
 import 'package:vegan_power/controllers/spawn_clouds.dart';
+import 'package:vegan_power/controllers/sounds.dart';
+import 'package:vegan_power/views/home_view.dart';
+import 'package:vegan_power/views/lost_view.dart';
+import 'package:vegan_power/view_list.dart';
 
 import 'package:flutter/material.dart';
 
 class GameEngine extends FlameGame
     with TapDetector, PanDetector, HasCollisionDetection {
   final int maxLife = 7;
-  final double startSpeedAnimal = 2.0;
-  final double startSpeedFruit = 2.0;
   final SharedPreferences storage;
+
   late Random rnd;
+  late double gameTime;
   late double tileSize;
+
+  late Background background;
+
+  int score = 0;
+  late int life;
+
   double fruitSpeed = 1.5;
   double animalSpeed = 2.0;
 
-  late List<Cloud> clouds; // Declare clouds as late
-  /*List<Fruit> fruits;
-  List<Animal> animals;*/
+  late Sounds sounds;
 
-  late Background background;
-  int score = 0;
+  late List<Cloud> clouds; // Declare clouds as late
+  late List<Fruit> fruits;
+  late List<Animal> animals;
+  late Player player;
+
+  ViewList activeView = ViewList.home;
+
+  late HomeView homeView;
+  late LostView lostView;
+
+  late StartButton startButton;
+  late HelpButton helpButton;
+  late CreditsButton creditsButton;
+  late MusicButton musicButton;
+  late SoundButton soundButton;
 
   GameEngine(this.storage) {
+    startButton = StartButton(this);
+    helpButton = HelpButton(this);
+    creditsButton = CreditsButton(this);
+    musicButton = MusicButton(this);
+    soundButton = SoundButton(this);
+
+    //gameTime = 0;
+    clouds = <Cloud>[];
+    fruits = <Fruit>[];
+    animals = <Animal>[];
+
     rnd = Random();
-    clouds = []; // Initialize clouds as an empty list in the constructor
+
+    score = 0;
+    life = maxLife;
+
+    /*fruitSpeed = startSpeedFruit;
+    animalSpeed = startSpeedAnimal;
+    */
+
+    sounds = Sounds();
+    /*cloudSpawner = SpawnClouds(this);
+    fruitSpawner = SpawnFruits(this);
+    animalSpawner = SpawnAnimals(this);
+    background = Background(this);
+    displayScore = DisplayScore(this);
+    displayCredits = DisplayCredits(this);
+    displayHelp = DisplayHelp(this);
+    displayHighScore = DisplayHighScore(this);
+    displayLife = DisplayLife(this);
+    */
+  
+    FlameAudio.bgm.play('music/bensound-jazzyfrenchy.mp3', volume: .3);
   }
 
   @override
@@ -40,18 +99,16 @@ class GameEngine extends FlameGame
     await super.onLoad();
     tileSize = size.x / 10;
 
-    background = Background(this);
-
-    // Add background
-    /*final background = SpriteComponent()
-      ..sprite = await loadSprite('bg/blue-gradient-background.jpg')
-      ..size = size; // Set background size to fill the screen
-    add(background);*/
+    //background = Background(this);
 
     // Add initial game components
     spawnCloud();
+    //Spawn player in the middle of the screen
+    player = Player(this, size.x / 2 - tileSize, size.y / 2);
     //spawnAnimal();
-    /*spawnFruit();*/
+    /*spawnFruit();
+    
+    */
   }
 
   @override

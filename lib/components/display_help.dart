@@ -26,13 +26,13 @@ Game ends when you have no more health.
 
   double fontSize = 20.0;
 
-  TextPainter painter;
-  TextPainter painter2;
+  late TextPainter painter;
+  late TextPainter painter2;
 
-  TextStyle textStyle;
-  TextStyle textStyle2;
+  late TextStyle textStyle;
+  late TextStyle textStyle2;
 
-  Offset position;
+  late Offset position;
 
   DisplayHelp(this.game) {
     painter = TextPainter(

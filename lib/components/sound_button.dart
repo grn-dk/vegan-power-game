@@ -5,9 +5,9 @@ import 'package:vegan_power/game_engine.dart';
 
 class SoundButton {
   final GameEngine game;
-  Rect rect;
-  Sprite enabledSprite;
-  Sprite disabledSprite;
+  late Rect rect;
+  late Sprite enabledSprite;
+  late Sprite disabledSprite;
   bool isEnabled = true;
 
   SoundButton(this.game) {
