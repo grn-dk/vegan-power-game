@@ -88,10 +88,10 @@ class GameEngine extends FlameGame
     sounds = Sounds();
 
     // Play background music
-    FlameAudio.bgm.play('music/bensound-jazzyfrenchy.mp3', volume: .3);
+    //FlameAudio.bgm.play('music/bensound-jazzyfrenchy.mp3', volume: .3);
 
     // Add initial game components
-    spawnCloud();
+    //spawnCloud();
     player = Player(this, size.x / 2 - tileSize, size.y / 2);
   }
 
