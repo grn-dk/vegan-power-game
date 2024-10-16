@@ -1,7 +1,6 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.vegan_power">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
    <application
-        android:label="vegan_power"
+        android:label="vegan_power_game"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

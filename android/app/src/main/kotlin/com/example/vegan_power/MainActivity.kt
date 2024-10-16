@@ -1,4 +1,4 @@
-package com.example.vegan_power
+package dk.grn.vegan_power
 
 import io.flutter.embedding.android.FlutterActivity
 
