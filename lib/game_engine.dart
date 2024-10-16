@@ -42,7 +42,7 @@ class GameEngine extends FlameGame
 
   late Sounds sounds;
 
-  late List<Cloud> clouds; // Declare clouds as late
+  late List<Cloud> clouds;
   late List<Fruit> fruits;
   late List<Animal> animals;
   late Player player;
@@ -58,66 +58,51 @@ class GameEngine extends FlameGame
   late MusicButton musicButton;
   late SoundButton soundButton;
 
-  GameEngine(this.storage) {
+  GameEngine(this.storage);
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+
+    // Initialize tileSize based on the game size, now that it is available
+    tileSize = size.x / 10;
+
+    // Initialize the background now that the size is available
+    background = Background(this);
+
+    // Initialize components that depend on tileSize
     startButton = StartButton(this);
     helpButton = HelpButton(this);
     creditsButton = CreditsButton(this);
     musicButton = MusicButton(this);
     soundButton = SoundButton(this);
 
-    //gameTime = 0;
     clouds = <Cloud>[];
     fruits = <Fruit>[];
     animals = <Animal>[];
 
     rnd = Random();
-
     score = 0;
     life = maxLife;
 
-    /*fruitSpeed = startSpeedFruit;
-    animalSpeed = startSpeedAnimal;
-    */
-
     sounds = Sounds();
-    /*cloudSpawner = SpawnClouds(this);
-    fruitSpawner = SpawnFruits(this);
-    animalSpawner = SpawnAnimals(this);
-    background = Background(this);
-    displayScore = DisplayScore(this);
-    displayCredits = DisplayCredits(this);
-    displayHelp = DisplayHelp(this);
-    displayHighScore = DisplayHighScore(this);
-    displayLife = DisplayLife(this);
-    */
-  
+
+    // Play background music
     FlameAudio.bgm.play('music/bensound-jazzyfrenchy.mp3', volume: .3);
-  }
-
-  @override
-  Future<void> onLoad() async {
-    await super.onLoad();
-    tileSize = size.x / 10;
-
-    //background = Background(this);
 
     // Add initial game components
     spawnCloud();
-    //Spawn player in the middle of the screen
     player = Player(this, size.x / 2 - tileSize, size.y / 2);
-    //spawnAnimal();
-    /*spawnFruit();
-    
-    */
   }
 
   @override
   void render(Canvas canvas) {
-    // First call the super method to render all the default components
     super.render(canvas);
 
-    // Always visible section
+    // Render the background first
     background.render(canvas);
+
+    // Render the clouds
     clouds.forEach((Cloud cloud) => cloud.render(canvas));
 
     // Custom drawing logic (example: rendering score)
@@ -133,9 +118,9 @@ class GameEngine extends FlameGame
   void spawnCloud() {
     double x = rnd.nextDouble() * (size.x - 100);
     double y = -100;
-    Cloud cloud = Cloud(this, x, y); // Create a Cloud instance
-    clouds.add(cloud); // Add it to the clouds list
-    add(cloud); // Add it to the Flame engine
+    Cloud cloud = Cloud(this, x, y);
+    clouds.add(cloud);
+    add(cloud);
   }
 
   void spawnFruit() {
