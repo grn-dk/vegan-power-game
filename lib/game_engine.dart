@@ -2,9 +2,14 @@ import 'dart:math';
 
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame_audio/flame_audio.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vegan_power/components/credits_button.dart';
+import 'package:vegan_power/components/display_credits.dart';
+import 'package:vegan_power/components/display_help.dart';
+import 'package:vegan_power/components/display_high_score.dart';
+import 'package:vegan_power/components/display_life.dart';
+import 'package:vegan_power/components/display_score.dart';
 import 'package:vegan_power/components/cloud.dart';
 import 'package:vegan_power/components/fruit.dart';
 import 'package:vegan_power/components/animal.dart';
@@ -14,12 +19,14 @@ import 'package:vegan_power/components/start_button.dart';
 import 'package:vegan_power/components/sound_button.dart';
 import 'package:vegan_power/components/music_button.dart';
 import 'package:vegan_power/components/help_button.dart';
-import 'package:vegan_power/components/credits_button.dart';
 import 'package:vegan_power/controllers/spawn_clouds.dart';
+import 'package:vegan_power/controllers/spawn_fruits.dart';
+import 'package:vegan_power/controllers/spawn_animals.dart';
 import 'package:vegan_power/controllers/sounds.dart';
 import 'package:vegan_power/views/home_view.dart';
 import 'package:vegan_power/views/lost_view.dart';
 import 'package:vegan_power/view_list.dart';
+import 'package:vegan_power/controllers/audio_manager.dart';
 
 import 'package:flutter/material.dart';
 
@@ -41,11 +48,21 @@ class GameEngine extends FlameGame
   double animalSpeed = 2.0;
 
   late Sounds sounds;
+  late SpawnClouds cloudSpawner;
+  late SpawnFruits fruitSpawner;
+  late SpawnAnimals animalSpawner;
 
   late List<Cloud> clouds;
   late List<Fruit> fruits;
   late List<Animal> animals;
+
   late Player player;
+
+  late DisplayScore displayScore;
+  late DisplayCredits displayCredits;
+  late DisplayHelp displayHelp;
+  late DisplayLife displayLife;
+  late DisplayHighScore displayHighScore;
 
   ViewList activeView = ViewList.home;
 
@@ -63,6 +80,9 @@ class GameEngine extends FlameGame
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+
+    homeView = HomeView(this);
+    lostView = LostView(this);
 
     // Initialize tileSize based on the game size, now that it is available
     tileSize = size.x / 10;
@@ -87,12 +107,27 @@ class GameEngine extends FlameGame
 
     sounds = Sounds();
 
-    // Play background music
-    //FlameAudio.bgm.play('music/bensound-jazzyfrenchy.mp3', volume: .3);
+    // Play background music using the AudioManager
+    AudioManager()
+        .playBackgroundMusic('music/bensound-jazzyfrenchy.mp3', volume: 0.3);
 
     // Add initial game components
-    //spawnCloud();
+    cloudSpawner = SpawnClouds(this);
+    fruitSpawner = SpawnFruits(this);
+    animalSpawner = SpawnAnimals(this);
+    displayScore = DisplayScore(this);
+    displayCredits = DisplayCredits(this);
+    displayHelp = DisplayHelp(this);
+    displayHighScore = DisplayHighScore(this);
+    displayLife = DisplayLife(this);
+    //Spawn player in the middle of the screen
     player = Player(this, size.x / 2 - tileSize, size.y / 2);
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+    tileSize = size.x / 10;
   }
 
   @override
@@ -105,14 +140,7 @@ class GameEngine extends FlameGame
     // Render the clouds
     clouds.forEach((Cloud cloud) => cloud.render(canvas));
 
-    // Custom drawing logic (example: rendering score)
-    final textStyle = TextStyle(color: Colors.white, fontSize: 24);
-    final textSpan = TextSpan(text: 'Score: $score', style: textStyle);
-    final textPainter =
-        TextPainter(text: textSpan, textDirection: TextDirection.ltr);
-    textPainter.layout();
-    textPainter.paint(
-        canvas, Offset(10, 10)); // Draw the score at position (10, 10)
+    if (activeView == ViewList.home) homeView.render(canvas);
   }
 
   void spawnCloud() {
@@ -148,5 +176,12 @@ class GameEngine extends FlameGame
   @override
   void onPanUpdate(DragUpdateInfo info) {
     super.onPanUpdate(info);
+  }
+
+  @override
+  void onRemove() {
+    // Stop the background music when the game is removed
+    AudioManager().dispose();
+    super.onRemove();
   }
 }
