@@ -14,41 +14,6 @@ void main() async {
   await Flame.device.setPortraitUpOnly();
   await Flame.device.fullScreen();
 
-  // Load all images
-  await Flame.images.loadAll(<String>[
-    'branding/vegan_power_logo.png',
-    'ui/heart_empty_32x32.png',
-    'ui/game_over.png',
-    'ui/start_game.png',
-    'ui/heart_full_32x32.png',
-    'bg/cloud_02.png',
-    'bg/cloud_01.png',
-    'units/elephant.png',
-    'units/cow.png',
-    'units/watermelon.png',
-    'units/penguin.png',
-    'units/strawberry_01.png',
-    'units/pig.png',
-    'units/dog.png',
-    'units/banana_02.png',
-    'units/player_01.png',
-    'units/chicken.png',
-    'units/player_02.png',
-    'units/banana_01.png',
-    'units/player_04.png',
-    'units/orange.png',
-    'units/banana_03.png',
-    'units/player_03.png',
-    'units/pear.png',
-    'icons/no_music_icon.png',
-    'icons/credits_icon.png',
-    'icons/no_sound_icon.png',
-    'icons/music_icon.png',
-    'icons/help_icon.png',
-    'icons/sound_icon.png',
-    'bg/blue-gradient-background.jpg',
-  ]);
-
   // Initialize the game engine
   GameEngine game = GameEngine(storage);
 
